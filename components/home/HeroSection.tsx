@@ -145,7 +145,7 @@ export default function HeroSection() {
         </p>
 
         <p className="text-white/70 text-lg leading-relaxed mb-12 max-w-xl">
-          From the fertile soils of Kolhapur to 30+ countries — the finest
+          From the fertile soils of Kolhapur to 30+ countries <br />the finest
           spices, grains and organic commodities with zero compromise.
         </p>
 

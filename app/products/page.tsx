@@ -27,7 +27,7 @@ const allProducts: Product[] = [
     name: "Organic Turmeric Powder",
     category: "Spices",
     description:
-      "Golden-bright, certified organic turmeric from Kolhapur's finest farms. Over 25% curcumin content. Available in 1 kg to 50 kg bulk configurations.",
+      "Golden bright, certified organic turmeric from Kolhapur's finest farms. Over 25% curcumin content. Available in 1 kg to 50 kg bulk configurations.",
     image: "/turmeric.png",
     bgColor: "rgb(245, 245, 240)",
     tags: ["Organic Certified", "Export Grade"],
@@ -37,7 +37,7 @@ const allProducts: Product[] = [
     name: "Malabar Black Pepper",
     category: "Spices",
     description:
-      "Bold, pungent black pepper — the king of spices. Sun-dried to lock in natural oils and sharp heat. Export-grade, FSSAI certified, full documentation.",
+      "Bold, pungent black pepper the king of spices. Sun dried to lock in natural oils and sharp heat. Export grade, FSSAI certified, full documentation.",
     image: "/black-pepper.png",
     bgColor: "rgb(240, 245, 240)",
     tags: ["Sun Dried", "Export Grade"],
@@ -47,7 +47,7 @@ const allProducts: Product[] = [
     name: "Premium Cardamom",
     category: "Spices",
     description:
-      "Hand-picked green cardamom pods with an intense floral aroma. The signature spice of South India — harvested at peak maturity for export excellence.",
+      "Hand picked green cardamom pods with an intense floral aroma. The signature spice of South India harvested at peak maturity for export excellence.",
     image: "/cardamom.png",
     bgColor: "rgb(245, 245, 240)",
     tags: ["Hand-Picked", "Export Grade"],
@@ -67,7 +67,7 @@ const allProducts: Product[] = [
     name: "Dry Ginger",
     category: "Spices",
     description:
-      "High-quality dried ginger with a strong aroma and spicy flavor, naturally supporting immunity and digestion. Available whole, split, or powdered.",
+      "High quality dried ginger with a strong aroma and spicy flavor, naturally supporting immunity and digestion. Available whole, split, or powdered.",
     image: null,
     bgColor: "rgb(245, 245, 240)",
     tags: ["Sun Dried", "Export Grade"],
@@ -77,7 +77,7 @@ const allProducts: Product[] = [
     name: "Cumin Seeds",
     category: "Seeds",
     description:
-      "Warm, earthy cumin with high essential oil content. Cleaned and machine-sorted for maximum purity. Trusted by spice importers across the Gulf and Europe.",
+      "Warm, earthy cumin with high essential oil content. Cleaned and machine sorted for maximum purity. Trusted by spice importers across the Gulf and Europe.",
     image: "/cumin.png",
     bgColor: "rgb(240, 245, 240)",
     tags: ["Machine Sorted", "Export Grade"],
@@ -87,7 +87,7 @@ const allProducts: Product[] = [
     name: "Coriander Seeds",
     category: "Seeds",
     description:
-      "Mild, citrusy coriander seeds from Rajasthan and Maharashtra farms. Machine-cleaned, split-free, and packed for long-haul export.",
+      "Mild, citrusy coriander seeds from Rajasthan and Maharashtra farms. Machine cleaned, split-free, and packed for long-haul export.",
     image: "/coriander.png",
     bgColor: "rgb(245, 245, 240)",
     tags: ["Machine Cleaned", "Export Grade"],
@@ -107,7 +107,7 @@ const allProducts: Product[] = [
     name: "Fennel Seeds",
     category: "Seeds",
     description:
-      "Fragrant spice with a sweet and mild flavor, often used in traditional medicine to support digestion and overall well-being.",
+      "Fragrant spice with a sweet and mild flavor, often used in traditional medicine to support digestion and overall well being.",
     image: null,
     bgColor: "rgb(245, 245, 240)",
     tags: ["Machine Cleaned", "Export Grade"],
@@ -241,8 +241,8 @@ export default function ProductsPage() {
             Premium Agro Products
           </h1>
           <p className="text-gray-500 max-w-xl text-base leading-relaxed">
-            Certified organic spices, seeds, and grains — sourced from
-            Kolhapur&apos;s finest farms and export-ready worldwide.
+            Certified organic spices, seeds, and grains sourced from
+            Kolhapur&apos;s finest farms and export ready worldwide.
           </p>
         </div>
       </section>
