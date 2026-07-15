@@ -130,7 +130,7 @@ export default function FeaturedProducts() {
           >
             {/* Product Image */}
             <div
-              className="lg:w-5/12 overflow-hidden relative cursor-pointer"
+              className="lg:w-5/12 overflow-hidden relative cursor-pointer h-64 lg:h-auto"
               style={{ background: product.bgColor }}
             >
               <Image
