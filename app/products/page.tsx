@@ -34,7 +34,7 @@ const allProducts: Product[] = [
   },
   {
     slug: "black-pepper",
-    name: "Malabar Black Pepper",
+    name: "Black Pepper",
     category: "Spices",
     description:
       "Bold, pungent black pepper the king of spices. Sun dried to lock in natural oils and sharp heat. Export grade, FSSAI certified, full documentation.",
@@ -43,18 +43,8 @@ const allProducts: Product[] = [
     tags: ["Sun Dried", "Export Grade"],
   },
   {
-    slug: "cardamom",
-    name: "Premium Cardamom",
-    category: "Spices",
-    description:
-      "Hand picked green cardamom pods with an intense floral aroma. The signature spice of South India harvested at peak maturity for export excellence.",
-    image: "/cardamom.png",
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Hand-Picked", "Export Grade"],
-  },
-  {
     slug: "red-chilli",
-    name: "Chili Powder & Flakes",
+    name: "Chili Powder",
     category: "Spices",
     description:
       "Bold and spicy red chili that brings vibrant color and rich heat to any recipe. Available as whole dried, flakes, or finely ground powder.",
@@ -121,16 +111,6 @@ const allProducts: Product[] = [
     image: null,
     bgColor: "rgb(240, 245, 240)",
     tags: ["Machine Sorted", "Export Grade"],
-  },
-  {
-    slug: "wheat",
-    name: "Organic Wheat Grains",
-    category: "Seeds",
-    description:
-      "Hard red wheat from Maharashtra's Deccan plateau. Protein-rich, organically grown, cleaned and graded for international food-processing standards.",
-    image: "/wheat.png",
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Organic Certified", "Export Grade"],
   },
   {
     slug: "mint",

@@ -96,7 +96,7 @@ const stats = [
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col -mt-20">
+    <section className="relative min-h-[90vh] flex flex-col -mt-20 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -118,10 +118,7 @@ export default function HeroSection() {
       {/* Hero Content */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 pt-28 pb-0">
         {/* Badge */}
-        <span className="inline-flex items-center gap-2 border border-[#D4A574]/50 text-[#D4A574] text-[10px] font-black tracking-[0.35em] uppercase px-5 py-2.5 rounded-full mb-10 backdrop-blur-sm bg-black/10">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#D4A574] animate-pulse" />
-          Exporting India&apos;s Finest Since 1999
-        </span>
+        
 
         {/* Headline */}
         <h1
@@ -145,7 +142,7 @@ export default function HeroSection() {
         </p>
 
         <p className="text-white/70 text-lg leading-relaxed mb-12 max-w-xl">
-          From the fertile soils of Kolhapur to 30+ countries <br />the finest
+          From the fertile soils of Kolhapur to 30+ countries, the finest
           spices, grains and organic commodities with zero compromise.
         </p>
 
@@ -183,8 +180,8 @@ export default function HeroSection() {
       </div>
 
       {/* Stats Bar */}
-      <div className="relative z-10 max-w-5xl w-full mx-auto px-6 pb-0 mt-16">
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
+      <div className="relative z-10 max-w-5xl w-full mx-auto px-4 pb-0 mt-16">
+        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 grid grid-cols-2 md:grid-cols-4 divide-y divide-x-0 md:divide-x md:divide-y-0 divide-gray-100 overflow-hidden">
           {stats.map((stat) => (
             <div
               key={stat.label}

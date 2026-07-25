@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased overflow-x-hidden">{children}</body>
     </html>
   );
 }

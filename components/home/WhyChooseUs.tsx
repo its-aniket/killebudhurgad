@@ -96,10 +96,10 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-28 bg-[#2D5F2E] relative overflow-hidden">
-      {/* Decorative circles */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-5 rounded-full border-[80px] border-white translate-x-1/3 -translate-y-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-5 rounded-full border-[60px] border-white -translate-x-1/3 translate-y-1/3 pointer-events-none" />
+    <section className="py-28 bg-[#2D5F2E] relative" style={{ overflow: 'clip' }}>
+      {/* Decorative circles — clipped to section boundary */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-5 rounded-full border-[80px] border-white pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-5 rounded-full border-[60px] border-white pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         {/* Section Header */}

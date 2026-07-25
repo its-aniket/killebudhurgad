@@ -45,8 +45,8 @@ const products: Record<string, Product> = {
     bgColor: "rgb(253, 249, 240)",
     tags: ["Organic Certified", "Export Grade", "Bulk Available", "FSSAI Approved"],
     features: [
-      "Over 25% curcumin content — premium quality guaranteed",
-      "Certified organic — no pesticides or synthetic additives",
+      "Over 25% curcumin content, premium quality guaranteed",
+      "Certified organic, no pesticides or synthetic additives",
       "Sun-dried and stone-ground to preserve natural oils",
       "Available in 1 kg to 1000 kg configurations",
       "Full export documentation provided",
@@ -71,7 +71,7 @@ const products: Record<string, Product> = {
     slug: "black-pepper",
     name: "Malabar Black Pepper",
     category: "Spices",
-    tagline: "The King of Spices — bold and pungent",
+    tagline: "The King of Spices, bold and pungent",
     description:
       "Premium Malabar Black Pepper sourced directly from the spice gardens of Kerala. Sun-dried to lock in natural oils and sharp heat. Available as whole peppercorns or ground powder, with full FSSAI certification and export documentation.",
     image: "/black-pepper.png",
@@ -111,8 +111,8 @@ const products: Record<string, Product> = {
     bgColor: "rgb(245, 248, 245)",
     tags: ["Hand-Picked", "Export Grade", "Bulk Available", "FSSAI Approved"],
     features: [
-      "Intense floral aroma — harvested at peak maturity",
-      "Bold green color — naturally sun-dried",
+      "Intense floral aroma, harvested at peak maturity",
+      "Bold green color, naturally sun-dried",
       "Sizes 6mm–8mm+ available",
       "Available in 1 kg to 100 kg configurations",
       "Full export documentation",
@@ -137,14 +137,14 @@ const products: Record<string, Product> = {
     slug: "red-chilli",
     name: "Chili Powder & Flakes",
     category: "Spices",
-    tagline: "Bold, fiery red chili — whole, flakes, or powder",
+    tagline: "Bold, fiery red chili, whole, flakes, or powder",
     description:
-      "Our premium Red Chili is sourced from sun-drenched farms across Maharashtra and Andhra Pradesh. Available as whole dried chilies, flakes, or finely ground powder — delivering vibrant color and rich heat to any recipe.",
+      "Our premium Red Chili is sourced from sun-drenched farms across Maharashtra and Andhra Pradesh. Available as whole dried chilies, flakes, or finely ground powder, delivering vibrant color and rich heat to any recipe.",
     image: "/red-chilli.png",
     bgColor: "rgb(250, 242, 240)",
     tags: ["Sun Dried", "Export Grade", "Bulk Available", "FSSAI Approved"],
     features: [
-      "High ASTA color value — deep red, vibrant appearance",
+      "High ASTA color value, deep red, vibrant appearance",
       "Available whole, flakes, or powder",
       "Low moisture content for extended shelf life",
       "Available in 1 kg to 500 kg configurations",

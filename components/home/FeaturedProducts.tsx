@@ -15,29 +15,18 @@ const products = [
   },
   {
     slug: "black-pepper",
-    name: "Malabar Black Pepper",
+    name: "Black Pepper",
     category: "Spices",
     description:
-      "Bold, pungent black pepper — the king of spices. Sun-dried to lock in natural oils and sharp heat. Export-grade, FSSAI certified, full documentation.",
+      "Bold, pungent black pepper, the king of spices. Sun-dried to lock in natural oils and sharp heat. Export-grade, FSSAI certified, full documentation.",
     tags: ["Sun Dried", "Export Grade", "Bulk Available"],
     image: "/black-pepper.png",
     bgColor: "rgb(240, 245, 240)",
     reverse: true,
   },
   {
-    slug: "cardamom",
-    name: "Premium Cardamom",
-    category: "Spices",
-    description:
-      "Hand-picked green cardamom pods with an intense floral aroma. The signature spice of South India — harvested at peak maturity for export excellence.",
-    tags: ["Hand-Picked", "Export Grade", "Bulk Available"],
-    image: "/cardamom.png",
-    bgColor: "rgb(245, 245, 240)",
-    reverse: false,
-  },
-  {
     slug: "red-chilli",
-    name: "Chili Powder & Flakes",
+    name: "Chili Powder",
     category: "Spices",
     description:
       "Bold and spicy red chili that brings vibrant color and rich heat to any recipe. Available as whole dried, flakes, or finely ground powder.",

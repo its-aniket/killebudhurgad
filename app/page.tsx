@@ -7,6 +7,7 @@ import WhyChooseUs from "@/components/home/WhyChooseUs";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import CertificationsBar from "@/components/home/CertificationsBar";
+import FAQSection from "@/components/home/FAQSection";
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
         <Testimonials />
         <CTASection />
         <CertificationsBar />
+        <FAQSection />
       </main>
       <Footer />
       <WhatsAppFAB />

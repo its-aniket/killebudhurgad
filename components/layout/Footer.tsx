@@ -117,78 +117,7 @@ const footerLegalLinks = [
 export default function Footer() {
   return (
     <footer>
-      {/* Newsletter Banner */}
-      <div className="bg-[#2D5F2E] relative overflow-hidden">
-        {/* Watermark */}
-        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-          <span
-            className="absolute -bottom-8 -left-4 font-black text-white/5 leading-none select-none whitespace-nowrap"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: "clamp(80px, 14vw, 180px)",
-            }}
-          >
-            AGRO
-          </span>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 relative z-10">
-          <div className="lg:flex items-end justify-between gap-12">
-            <div className="mb-10 lg:mb-0">
-              <p className="text-[#D4A574] text-xs font-bold tracking-[0.3em] uppercase mb-4">
-                Stay in the loop
-              </p>
-              <h2
-                className="text-4xl lg:text-5xl font-black text-white leading-tight mb-2"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
-                Premium products,
-                <br />
-                <span className="font-serif italic font-normal text-[#D4A574]">
-                  straight to your inbox.
-                </span>
-              </h2>
-              <p className="text-white/60 text-sm mt-4 max-w-md">
-                Harvest updates, new certifications, and export offers —
-                curated for global buyers.
-              </p>
-            </div>
-
-            <div className="lg:min-w-[400px]">
-              <form className="space-y-3">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="w-full bg-white/10 border border-white/20 text-white rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-[#D4A574] focus:bg-white/15 transition-all placeholder:text-white/40"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-[#D4A574] text-[#2C2C2C] font-bold py-4 rounded-xl text-sm hover:bg-white transition-colors flex items-center justify-center gap-2 group"
-                >
-                  Subscribe Now
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="group-hover:translate-x-0.5 transition-transform"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
       {/* Main Footer */}
       <div className="bg-[#1a1a1a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-8">

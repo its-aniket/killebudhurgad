@@ -314,7 +314,7 @@ export default function AboutPage() {
 
       <main>
         {/* ── Hero Section ── */}
-        <section className="relative py-24 bg-[#F0F5F0] overflow-hidden">
+        <section className="relative py-24 bg-[#F0F5F0]" style={{ overflow: 'clip' }}>
           {/* Decorative circle */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-5 rounded-full border-[80px] border-[#2D5F2E] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
 
@@ -553,7 +553,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── CTA Section ── */}
-        <section className="py-24 bg-[#2D5F2E] relative overflow-hidden">
+        <section className="py-24 bg-[#2D5F2E] relative" style={{ overflow: 'clip' }}>
           <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-5 rounded-full border-[80px] border-white translate-x-1/3 -translate-y-1/3 pointer-events-none" />
           <div className="max-w-4xl mx-auto px-6 lg:px-10 relative z-10 text-center">
             <p className="text-[#D4A574] text-[10px] font-black tracking-[0.3em] uppercase mb-4">
