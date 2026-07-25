@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -69,11 +70,15 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group" onClick={() => setMenuOpen(false)}>
-              <div className="w-9 h-9 rounded-xl bg-[#2D5F2E] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white" aria-hidden="true">
-                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                </svg>
+              <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform bg-white">
+                <Image
+                  src="/logo.png"
+                  alt="Kille Bhudargad logo"
+                  width={40}
+                  height={40}
+                  className="object-contain w-full h-full"
+                  priority
+                />
               </div>
               <span className="font-bold text-lg tracking-tight transition-colors duration-500" style={{ fontFamily: "'Poppins', sans-serif", color: logoTextColor }}>
                 Kille Bhudargad
