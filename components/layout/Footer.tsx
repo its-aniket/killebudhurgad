@@ -37,7 +37,6 @@ export default function Footer() {
     { label: tr.nav_about,             href: "/about" },
     { label: tr.footer_our_process,    href: "/about#process" },
     { label: tr.cert_label,            href: "/about#certifications" },
-    { label: tr.footer_careers,        href: "/contact" },
   ];
 
   const productLinks = [
@@ -171,6 +170,26 @@ export default function Footer() {
                 </a>
               ))}
             </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-white/[0.08] flex justify-center">
+            <a
+              href="https://visionwrapper.com/"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 transition-opacity hover:opacity-80"
+            >
+              <span aria-hidden="true" className="h-4 w-4 shrink-0 overflow-hidden">
+                <Image
+                  src="/Black_HZ_FULL_LOGO_SVG.svg"
+                  alt=""
+                  width={1454}
+                  height={466}
+                  className="h-4 w-auto max-w-none object-contain object-left invert"
+                />
+              </span>
+              <span className="text-[10px] font-medium text-gray-300 underline underline-offset-2">
+                Developed by VisionWrapper
+              </span>
+            </a>
           </div>
         </div>
       </div>

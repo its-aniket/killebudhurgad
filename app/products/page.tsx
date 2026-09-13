@@ -8,12 +8,14 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFAB from "@/components/layout/WhatsAppFAB";
 import { useLanguage } from "@/lib/LanguageContext";
-import { categoryIds, getLocalizedCategory, getLocalizedProduct, products, type CategoryId } from "@/lib/products";
+import { categoryIds, getLocalizedCategory, getLocalizedProduct, getLocalizedRiceLabel, products, type CategoryId } from "@/lib/products";
 
-type FilterCategory = "all" | CategoryId;
+type FilterCategory = "all" | "rice" | CategoryId;
 
 function categoryFromSearchParam(value: string | null): FilterCategory {
-  return categoryIds.includes(value?.toLowerCase() as CategoryId) ? value!.toLowerCase() as CategoryId : "all";
+  const normalized = value?.toLowerCase();
+  if (normalized === "rice") return "rice";
+  return categoryIds.includes(normalized as CategoryId) ? normalized as CategoryId : "all";
 }
 
 function ImagePlaceholder() {
@@ -37,13 +39,14 @@ function ProductsContent() {
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     return localizedProducts.filter((product) => {
-      const categoryMatches = activeCategory === "all" || product.categoryId === activeCategory;
+      const categoryMatches = activeCategory === "all"
+        || (activeCategory === "rice" ? product.slug.includes("rice") : product.categoryId === activeCategory);
       const searchMatches = query === "" || product.searchTerms.some((term) => term.includes(query)) || product.category.toLowerCase().includes(query);
       return categoryMatches && searchMatches;
     });
   }, [activeCategory, localizedProducts, search]);
 
-  const categories: FilterCategory[] = ["all", ...categoryIds];
+  const categories: FilterCategory[] = ["all", ...categoryIds, "rice"];
 
   return (
     <div className="min-h-screen bg-white text-[#2C2C2C]" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -61,7 +64,7 @@ function ProductsContent() {
           <div className="flex items-center gap-2 flex-wrap">
             {categories.map((category) => (
               <button key={category} onClick={() => setActiveCategory(category)} className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${activeCategory === category ? "bg-[#2D5F2E] text-white shadow-sm" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
-                {category === "all" ? tr.prod_cat_all : getLocalizedCategory(category, lang)}
+                {category === "all" ? tr.prod_cat_all : category === "rice" ? getLocalizedRiceLabel(lang) : getLocalizedCategory(category, lang)}
               </button>
             ))}
           </div>

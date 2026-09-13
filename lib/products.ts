@@ -57,6 +57,23 @@ export interface LocalizedProduct extends Omit<Product, "name" | "tags" | "descr
 
 const names = (mr: string, hi: string) => ({ mr, hi });
 
+const riceCatalogueProduct = (
+  slug: string,
+  name: string,
+  description: string,
+  series: "Primary" | "Extended",
+): Product => ({
+  slug,
+  name: `${name} (${series} Series)`,
+  names: names(`${name} (${series} मालिका)`, `${name} (${series} श्रृंखला)`),
+  categoryId: "grains",
+  description,
+  image: "/rice.png",
+  bgColor: "rgb(245, 245, 240)",
+  tags: ["export-grade", "bulk-available", "machine-cleaned"],
+  searchAliases: ["rice", "basmati", "sella", "steam", name, series],
+});
+
 const localizedNames: Partial<Record<LangCode, Record<string, string>>> = {
   ar: { rice: "أرز بسمتي", turmeric: "مسحوق كركم عضوي", "black-pepper": "فلفل أسود", "red-chilli": "مسحوق فلفل حار", "dry-ginger": "زنجبيل مجفف", cumin: "بذور الكمون", coriander: "بذور الكزبرة", fenugreek: "بذور الحلبة", fennel: "بذور الشمر", sesame: "بذور السمسم", mint: "أوراق النعناع", basil: "أوراق الريحان", moringa: "أوراق المورينغا", "curry-leaves": "أوراق الكاري", cardamom: "هيل", wheat: "قمح" },
   es: { rice: "Arroz basmati", turmeric: "Cúrcuma orgánica en polvo", "black-pepper": "Pimienta negra", "red-chilli": "Chile rojo en polvo", "dry-ginger": "Jengibre seco", cumin: "Semillas de comino", coriander: "Semillas de cilantro", fenugreek: "Semillas de fenogreco", fennel: "Semillas de hinojo", sesame: "Semillas de sésamo", mint: "Hojas de menta", basil: "Hojas de albahaca", moringa: "Hojas de moringa", "curry-leaves": "Hojas de curry", cardamom: "Cardamomo", wheat: "Trigo" },
@@ -78,6 +95,26 @@ export const products: Product[] = [
     description: "Premium long-grain basmati rice, carefully selected for its delicate aroma, fluffy texture, and consistent export quality.",
     image: "/rice.png", bgColor: "rgb(245, 245, 240)", tags: ["export-grade", "bulk-available"], searchAliases: ["rice", "basmati", "तांदूळ", "चावल"],
   },
+  riceCatalogueProduct("pr-11-14-white-sella-rice-primary", "PR 11/14 White Sella Rice", "Medium grain white parboiled rice. Ideal for puffed rice (murmurra), farsan, and daily meals.", "Primary"),
+  riceCatalogueProduct("pr-11-14-steam-rice-primary", "PR 11/14 Steam Rice", "Medium grain steamed rice. Perfect for daily cooking, pulao, and idli-dosa batter.", "Primary"),
+  riceCatalogueProduct("1121-steam-basmati-rice-primary", "1121 Steam Basmati Rice", "Long grain premium steamed basmati rice. Excellent for biryani, pulao, and jeera rice.", "Primary"),
+  riceCatalogueProduct("1121-white-sella-basmati-rice-primary", "1121 White Sella Basmati Rice", "Long grain white parboiled basmati rice. Best for royal biryanis and special feasts.", "Primary"),
+  riceCatalogueProduct("fr-64-parboiled-rice-primary", "FR-64 Parboiled Rice", "Short grain parboiled rice. Best choice for south Indian dishes like idli, dosa, and uttapam.", "Primary"),
+  riceCatalogueProduct("1509-white-sella-basmati-rice-primary", "1509 White Sella Basmati Rice", "Extra-long grain white parboiled basmati rice. Ideal for premium long-grain rice dishes and royal events.", "Primary"),
+  riceCatalogueProduct("1509-steam-basmati-rice-primary", "1509 Steam Basmati Rice", "Extra-long grain steamed basmati rice. Superior quality for long rice dishes and flavourful pulao.", "Primary"),
+  riceCatalogueProduct("1509-golden-sella-basmati-rice-primary", "1509 Golden Sella Basmati Rice", "Extra-long grain golden parboiled basmati rice. Perfect for grand weddings, banquets, and royal biryanis.", "Primary"),
+  riceCatalogueProduct("1121-golden-sella-basmati-rice-primary", "1121 Golden Sella Basmati Rice", "Long grain golden parboiled basmati rice. Highly preferred for catering, celebrations, and restaurant biryani.", "Primary"),
+  riceCatalogueProduct("pr-11-14-golden-sella-rice-primary", "PR 11/14 Golden Sella Rice", "Medium grain golden parboiled rice. Suitable for bulk cooking and everyday consumption.", "Primary"),
+  riceCatalogueProduct("pr-11-14-white-sella-rice-extended", "PR 11/14 White Sella Rice", "Medium grain white parboiled rice. Ideal for puffed rice (murmurra), farsan, and daily meals.", "Extended"),
+  riceCatalogueProduct("pr-11-14-steam-rice-extended", "PR 11/14 Steam Rice", "Medium grain steamed rice. Perfect for daily cooking, pulao, and idli-dosa batter.", "Extended"),
+  riceCatalogueProduct("1121-steam-basmati-rice-extended", "1121 Steam Basmati Rice", "Long grain premium steamed basmati rice. Excellent for biryani, pulao, and jeera rice.", "Extended"),
+  riceCatalogueProduct("1121-white-sella-basmati-rice-extended", "1121 White Sella Basmati Rice", "Long grain white parboiled basmati rice. Best for royal biryanis and special feasts.", "Extended"),
+  riceCatalogueProduct("fr-64-parboiled-rice-extended", "FR-64 Parboiled Rice", "Short grain parboiled rice. Best choice for south Indian dishes like idli, dosa, and uttapam.", "Extended"),
+  riceCatalogueProduct("1509-white-sella-basmati-rice-extended", "1509 White Sella Basmati Rice", "Extra-long grain white parboiled basmati rice. Ideal for premium long-grain rice dishes and royal events.", "Extended"),
+  riceCatalogueProduct("1509-steam-basmati-rice-extended", "1509 Steam Basmati Rice", "Extra-long grain steamed basmati rice. Superior quality for long rice dishes and flavourful pulao.", "Extended"),
+  riceCatalogueProduct("1509-golden-sella-basmati-rice-extended", "1509 Golden Sella Basmati Rice", "Extra-long grain golden parboiled basmati rice. Perfect for grand weddings, banquets, and royal biryanis.", "Extended"),
+  riceCatalogueProduct("1121-golden-sella-basmati-rice-extended", "1121 Golden Sella Basmati Rice", "Long grain golden parboiled basmati rice. Highly preferred for catering, celebrations, and restaurant biryani.", "Extended"),
+  riceCatalogueProduct("pr-11-14-golden-sella-rice-extended", "PR 11/14 Golden Sella Rice", "Medium grain golden parboiled rice. Suitable for bulk cooking and everyday consumption.", "Extended"),
   {
     slug: "turmeric", name: "Organic Turmeric Powder", names: names("सेंद्रिय हळद पावडर", "जैविक हल्दी पाउडर"), categoryId: "spices",
     description: "Golden-bright, certified organic turmeric from Kolhapur's finest farms. Over 25% curcumin content. Available in 1 kg to 50 kg bulk configurations.",
@@ -137,6 +174,16 @@ export const products: Product[] = [
 
 export const featuredProductSlugs = ["rice", "turmeric", "red-chilli", "cumin"] as const;
 export const categoryIds: CategoryId[] = ["spices", "seeds", "herbs", "grains"];
+
+const riceLabels: Record<LangCode, string> = {
+  en: "Rice", mr: "तांदूळ", hi: "चावल", ar: "أرز", es: "Arroz", fr: "Riz",
+  de: "Reis", nl: "Rijst", ru: "Рис", zh: "大米", ja: "米", pt: "Arroz",
+  it: "Riso", gu: "ચોખા", ta: "அரிசி",
+};
+
+export function getLocalizedRiceLabel(lang: LangCode) {
+  return riceLabels[lang];
+}
 
 const terms = {
   en: {
