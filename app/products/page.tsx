@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFAB from "@/components/layout/WhatsAppFAB";
+import { useLanguage } from "@/lib/LanguageContext";
 
 // ── Product Data ──────────────────────────────────────────────────────────────
 
@@ -182,9 +184,23 @@ function ImagePlaceholder() {
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
-export default function ProductsPage() {
+function ProductsContent() {
+  const { tr } = useLanguage();
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState<FilterCategory>("All");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
+
+  const categoryLabels: Record<FilterCategory, string> = {
+    All: tr.prod_cat_all,
+    Spices: "Spices",
+    Seeds: "Seeds",
+    Herbs: "Herbs",
+  };
+
+  // Sync search state if the URL param changes (e.g. navigating back/forward)
+  useEffect(() => {
+    setSearch(searchParams.get("search") ?? "");
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     return allProducts.filter((p) => {
@@ -209,7 +225,7 @@ export default function ProductsPage() {
       <section className="bg-[#F0F5F0] py-20 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-[#D4A574] text-[10px] font-black tracking-[0.3em] uppercase mb-4">
-            Our Catalogue
+            {tr.prod_catalogue_label}
           </p>
           <h1
             className="font-black text-[#2C2C2C] leading-tight mb-4"
@@ -218,11 +234,10 @@ export default function ProductsPage() {
               fontSize: "clamp(36px, 5vw, 60px)",
             }}
           >
-            Premium Agro Products
+            {tr.prod_hero_title}
           </h1>
           <p className="text-gray-500 max-w-xl text-base leading-relaxed">
-            Certified organic spices, seeds, and grains sourced from
-            Kolhapur&apos;s finest farms and export ready worldwide.
+            {tr.prod_hero_sub}
           </p>
         </div>
       </section>
@@ -232,19 +247,7 @@ export default function ProductsPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* Category Filters */}
           <div className="flex items-center gap-2 flex-wrap">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-gray-400"
-              aria-hidden="true"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400" aria-hidden="true">
               <path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />
             </svg>
             {categories.map((cat) => (
@@ -257,32 +260,19 @@ export default function ProductsPage() {
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
-                {cat}
+                {categoryLabels[cat]}
               </button>
             ))}
           </div>
 
           {/* Search */}
           <div className="relative">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              aria-hidden="true"
-            >
-              <path d="m21 21-4.34-4.34" />
-              <circle cx="11" cy="11" r="8" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true">
+              <path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" />
             </svg>
             <input
               type="search"
-              placeholder="Search products…"
+              placeholder={tr.prod_search_placeholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9 pr-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#2D5F2E] focus:ring-1 focus:ring-[#2D5F2E] w-52 transition-all"
@@ -295,13 +285,13 @@ export default function ProductsPage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-sm text-gray-400 mb-8">
-            {filtered.length} product{filtered.length !== 1 ? "s" : ""} found
+            {filtered.length} {filtered.length !== 1 ? tr.prod_found_plural : tr.prod_found}
           </p>
 
           {filtered.length === 0 ? (
             <div className="text-center py-24 text-gray-400">
-              <p className="text-lg font-semibold mb-2">No products found</p>
-              <p className="text-sm">Try adjusting your search or filter.</p>
+              <p className="text-lg font-semibold mb-2">{tr.prod_no_results}</p>
+              <p className="text-sm">{tr.prod_no_results_sub}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -311,77 +301,36 @@ export default function ProductsPage() {
                   href={`/products/${product.slug}`}
                   className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:border-gray-200 transition-all duration-300 flex flex-col"
                 >
-                  {/* Image */}
-                  <div
-                    className="overflow-hidden relative"
-                    style={{
-                      background: product.bgColor,
-                      height: "220px",
-                    }}
-                  >
+                  <div className="overflow-hidden relative" style={{ background: product.bgColor, height: "220px" }}>
                     {product.image ? (
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-contain p-8 transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      />
+                      <Image src={product.image} alt={product.name} fill className="object-contain p-8 transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
                     ) : (
                       <ImagePlaceholder />
                     )}
-                    {/* Category badge */}
                     <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#2D5F2E] text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest shadow-sm">
                       {product.category}
                     </span>
-                    {/* Export Grade badge on hover */}
                     <span className="absolute bottom-3 right-3 bg-[#2D5F2E] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      Export Grade
+                      {tr.prod_export_grade}
                     </span>
                   </div>
 
-                  {/* Card body */}
                   <div className="p-5 flex flex-col flex-1">
-                    <h3
-                      className="font-bold text-[#2C2C2C] text-base mb-2 leading-snug group-hover:text-[#2D5F2E] transition-colors"
-                      style={{ fontFamily: "'Poppins', sans-serif" }}
-                    >
+                    <h3 className="font-bold text-[#2C2C2C] text-base mb-2 leading-snug group-hover:text-[#2D5F2E] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {product.name}
                     </h3>
                     <p className="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2 flex-1">
                       {product.description}
                     </p>
-
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 mb-4">
                       {product.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[10px] font-semibold border border-gray-200 text-gray-400 px-2 py-0.5 rounded-full"
-                        >
-                          {tag}
-                        </span>
+                        <span key={tag} className="text-[10px] font-semibold border border-gray-200 text-gray-400 px-2 py-0.5 rounded-full">{tag}</span>
                       ))}
                     </div>
-
-                    {/* CTA */}
                     <span className="flex items-center gap-1.5 text-[#2D5F2E] text-sm font-bold mt-auto group/btn">
-                      View Details
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="group-hover/btn:translate-x-0.5 transition-transform"
-                        aria-hidden="true"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
+                      {tr.prod_view_details}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/btn:translate-x-0.5 transition-transform" aria-hidden="true">
+                        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                       </svg>
                     </span>
                   </div>
@@ -395,40 +344,16 @@ export default function ProductsPage() {
       {/* ── Bottom CTA ── */}
       <section className="py-16 bg-[#F9FAF9] border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2
-            className="font-black text-[#2C2C2C] mb-4"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: "clamp(24px, 3.5vw, 40px)",
-            }}
-          >
-            Need a custom product or bulk order?
+          <h2 className="font-black text-[#2C2C2C] mb-4" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)" }}>
+            {tr.prod_cta_title}
           </h2>
           <p className="text-gray-500 mb-8 max-w-lg mx-auto text-sm leading-relaxed">
-            We work with importers, distributors, and food manufacturers
-            worldwide. Get in touch for custom specifications, private labelling,
-            and volume pricing.
+            {tr.prod_cta_sub}
           </p>
-          <Link
-            href="/contact"
-            className="bg-[#2D5F2E] text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-[#1e4520] transition-all inline-flex items-center gap-2 group shadow-lg"
-          >
-            Request a Custom Quote
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="group-hover:translate-x-0.5 transition-transform"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
+          <Link href="/contact" className="bg-[#2D5F2E] text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-[#1e4520] transition-all inline-flex items-center gap-2 group shadow-lg">
+            {tr.prod_cta_btn}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
             </svg>
           </Link>
         </div>
@@ -437,5 +362,13 @@ export default function ProductsPage() {
       <Footer />
       <WhatsAppFAB />
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense>
+      <ProductsContent />
+    </Suspense>
   );
 }
