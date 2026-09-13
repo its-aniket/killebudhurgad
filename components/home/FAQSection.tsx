@@ -95,7 +95,7 @@ export default function FAQSection() {
             </div>
           </div>
 
-          {/* Right column — Accordion */}
+          {/* Right column Accordion */}
           <div className="flex flex-col gap-3">
             {faqs.map((faq, index) => (
               <FAQItem

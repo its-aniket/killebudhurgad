@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product = getProduct(slug);
   if (!product) return {};
   return {
-    title: `${product.name} — Kille Bhudargad Agro`,
+    title: `${product.name} Kille Bhudargad Agro`,
     description: product.description,
   };
 }

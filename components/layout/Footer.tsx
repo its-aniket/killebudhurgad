@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
-import { getLocalizedCategory } from "@/lib/products";
 
 const socialLinks = [
   {
@@ -31,19 +30,12 @@ const ChevronRight = () => (
 );
 
 export default function Footer() {
-  const { lang, tr } = useLanguage();
+  const { tr } = useLanguage();
 
   const companyLinks = [
     { label: tr.nav_about,             href: "/about" },
     { label: tr.footer_our_process,    href: "/about#process" },
     { label: tr.cert_label,            href: "/about#certifications" },
-  ];
-
-  const productLinks = [
-    { label: getLocalizedCategory("spices", lang), href: "/products?cat=Spices" },
-    { label: `${getLocalizedCategory("seeds", lang)} & ${getLocalizedCategory("grains", lang)}`, href: "/products?cat=Seeds" },
-    { label: getLocalizedCategory("herbs", lang), href: "/products" },
-    { label: tr.footer_organic, href: "/products" },
   ];
 
   const supportLinks = [
@@ -88,28 +80,12 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="hidden lg:block col-span-1" />
-
             {/* Company Links */}
             <div className="col-span-6 sm:col-span-4 lg:col-span-2">
               <h4 className="text-[#D4A574] text-xs font-bold tracking-[0.2em] uppercase mb-5">{tr.footer_company}</h4>
               <ul className="space-y-3.5">
                 {companyLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-1.5 group">
-                      <ChevronRight />{link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Product Links */}
-            <div className="col-span-6 sm:col-span-4 lg:col-span-2">
-              <h4 className="text-[#D4A574] text-xs font-bold tracking-[0.2em] uppercase mb-5">{tr.footer_products}</h4>
-              <ul className="space-y-3.5">
-                {productLinks.map((link) => (
-                  <li key={link.label}>
                     <Link href={link.href} className="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-1.5 group">
                       <ChevronRight />{link.label}
                     </Link>
@@ -133,7 +109,7 @@ export default function Footer() {
             </div>
 
             {/* Contact Column */}
-            <div className="col-span-12 lg:col-span-3">
+            <div className="col-span-12 sm:col-span-4 lg:col-span-4">
               <h4 className="text-[#D4A574] text-xs font-bold tracking-[0.2em] uppercase mb-5">{tr.footer_get_in_touch}</h4>
               <div className="space-y-3.5">
                 <a href="https://maps.google.com/?q=Bhudargad,Kolhapur,Maharashtra" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors group">
@@ -159,23 +135,13 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-            <p className="text-gray-600 text-xs">
+          <div className="grid grid-cols-1 items-center gap-4 pt-8 sm:grid-cols-3">
+            <p className="justify-self-center text-gray-600 text-xs sm:justify-self-start">
               © 2026 Kille Bhudargad Agro Private Limited. {tr.footer_rights}
             </p>
-            <div className="flex items-center gap-6">
-              {footerLegalLinks.map((link) => (
-                <a key={link.label} href={link.href} className="text-gray-600 text-xs hover:text-gray-300 transition-colors">
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-6 pt-6 border-t border-white/[0.08] flex justify-center">
             <a
               href="https://visionwrapper.com/"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 transition-opacity hover:opacity-80"
+              className="justify-self-center inline-flex items-center gap-1.5 px-2.5 py-1 transition-opacity hover:opacity-80"
             >
               <span aria-hidden="true" className="h-4 w-4 shrink-0 overflow-hidden">
                 <Image
@@ -190,7 +156,15 @@ export default function Footer() {
                 Developed by VisionWrapper
               </span>
             </a>
+            <div className="flex items-center gap-6 justify-self-center sm:justify-self-end">
+              {footerLegalLinks.map((link) => (
+                <a key={link.label} href={link.href} className="text-gray-600 text-xs hover:text-gray-300 transition-colors">
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
+
         </div>
       </div>
     </footer>
