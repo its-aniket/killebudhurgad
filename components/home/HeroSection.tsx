@@ -56,7 +56,7 @@ export default function HeroSection() {
     <section className="relative min-h-[90vh] flex flex-col overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image src="/hero-spices.png" alt="Premium Indian spices" fill className="object-cover" priority />
+        <Image src="/hero-spices-img.png" alt="Premium Indian rice and spices" fill className="object-cover" priority />
         <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.48) 50%, rgb(255,255,255) 100%)" }} />
       </div>
 
