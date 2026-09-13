@@ -2,28 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { languages } from "@/lib/translations";
-
-// ── Product data (kept in sync with products/page.tsx) ────────────────────────
-const allProducts = [
-  { slug: "turmeric",     name: "Organic Turmeric Powder", category: "Spices", image: "/turmeric.png" },
-  { slug: "black-pepper", name: "Black Pepper",            category: "Spices", image: "/black-pepper.png" },
-  { slug: "red-chilli",   name: "Chili Powder",            category: "Spices", image: "/red-chilli.png" },
-  { slug: "dry-ginger",   name: "Dry Ginger",              category: "Spices", image: null },
-  { slug: "cumin",        name: "Cumin Seeds",             category: "Seeds",  image: "/cumin.png" },
-  { slug: "coriander",    name: "Coriander Seeds",         category: "Seeds",  image: "/coriander.png" },
-  { slug: "fenugreek",    name: "Fenugreek Seeds",         category: "Seeds",  image: "/fenugreek.png" },
-  { slug: "fennel",       name: "Fennel Seeds",            category: "Seeds",  image: null },
-  { slug: "sesame",       name: "Sesame Seeds",            category: "Seeds",  image: null },
-  { slug: "mint",         name: "Mint Leaves",             category: "Herbs",  image: null },
-  { slug: "basil",        name: "Basil Leaves",            category: "Herbs",  image: null },
-  { slug: "moringa",      name: "Moringa Leaves",          category: "Herbs",  image: null },
-  { slug: "curry-leaves", name: "Curry Leaves",            category: "Herbs",  image: null },
-  { slug: "cardamom",     name: "Cardamom",                category: "Spices", image: "/cardamom.png" },
-  { slug: "wheat",        name: "Wheat",                   category: "Seeds",  image: "/wheat.png" },
-];
+import { categoryIds, getLocalizedCategory, getLocalizedProduct, products } from "@/lib/products";
 
 export default function Navbar({ forceScrolled = false }: { forceScrolled?: boolean }) {
   const { lang, setLang, tr } = useLanguage();
@@ -46,31 +28,36 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
   const results = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return [];
-    return allProducts.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q)
-    );
-  }, [searchQuery]);
+    return products.map((product) => getLocalizedProduct(product, lang)).filter((product) => product.searchTerms.some((term) => term.includes(q)) || product.category.toLowerCase().includes(q));
+  }, [lang, searchQuery]);
+
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false);
+    setSearchQuery("");
+  }, []);
 
   useEffect(() => {
-    if (forceScrolled) { setScrolled(true); return; }
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(forceScrolled || window.scrollY > 20);
     handleScroll();
+    if (forceScrolled) return;
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [forceScrolled]);
 
   useEffect(() => {
-    const handleResize = () => { if (window.innerWidth >= 768) setMenuOpen(false); };
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMenuOpen(false);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+    if (!menuOpen && !searchOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menuOpen, searchOpen]);
 
   // Close language dropdown on outside click
   useEffect(() => {
@@ -83,23 +70,20 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Focus input when overlay opens; close on Escape
+  // Focus the search field and let Escape close every temporary navigation layer.
   useEffect(() => {
     if (searchOpen) {
       setTimeout(() => searchInputRef.current?.focus(), 50);
     }
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeSearch();
+      if (e.key !== "Escape") return;
+      closeSearch();
+      setLangOpen(false);
+      setMenuOpen(false);
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchOpen]);
-
-  const closeSearch = () => {
-    setSearchOpen(false);
-    setSearchQuery("");
-  };
+  }, [closeSearch, searchOpen]);
 
   const navStyle: React.CSSProperties =
     scrolled || menuOpen
@@ -116,12 +100,12 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
 
   return (
     <>
-      <nav className="sticky top-0 z-50 transition-all duration-500" style={navStyle}>
+      <nav className="fixed inset-x-0 top-0 z-50 transition-all duration-500" style={navStyle}>
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="flex items-center justify-between h-20">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group" onClick={() => setMenuOpen(false)}>
+            <Link href="/" className="flex items-center gap-3 group" onClick={() => { setMenuOpen(false); setLangOpen(false); }}>
               <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform bg-white">
                 <Image src="/logo.png" alt="Kille Bhudargad logo" width={40} height={40} className="object-contain w-full h-full" priority />
               </div>
@@ -133,7 +117,7 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
             {/* Desktop Nav Links */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="relative text-sm font-semibold tracking-wide group py-1 transition-colors duration-500" style={{ color: textColor }}>
+                <Link key={link.href} href={link.href} onClick={() => setLangOpen(false)} className="relative text-sm font-semibold tracking-wide group py-1 transition-colors duration-500" style={{ color: textColor }}>
                   {link.label}
                   <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 rounded-full bg-[#D4A574] transition-all duration-300 group-hover:w-full" />
                 </Link>
@@ -146,7 +130,11 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
               {/* Language Dropdown */}
               <div ref={langRef} className="relative">
                 <button
-                  onClick={() => setLangOpen((o) => !o)}
+                  onClick={() => {
+                    setLangOpen((open) => !open);
+                    closeSearch();
+                    setMenuOpen(false);
+                  }}
                   className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors duration-500 hover:bg-black/5"
                   style={{ color: subTextColor }}
                   aria-haspopup="listbox"
@@ -168,7 +156,7 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
                   <div
                     role="listbox"
                     aria-label="Language selector"
-                    className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 py-2 max-h-80 overflow-y-auto"
+                    className="absolute end-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 py-2 max-h-80 overflow-y-auto"
                   >
                     {languages.map((l) => (
                       <button
@@ -193,7 +181,11 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
                 className="w-9 h-9 flex items-center justify-center rounded-lg transition-colors duration-500 hover:bg-black/5"
                 style={{ color: subTextColor }}
                 aria-label={tr.nav_search}
-                onClick={() => setSearchOpen(true)}
+                onClick={() => {
+                  setSearchOpen(true);
+                  setLangOpen(false);
+                  setMenuOpen(false);
+                }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" />
@@ -214,7 +206,11 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
               style={{ color: mobileIconColor }}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((o) => !o)}
+              onClick={() => {
+                setMenuOpen((open) => !open);
+                setLangOpen(false);
+                closeSearch();
+              }}
             >
               {menuOpen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -232,7 +228,7 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
 
         {/* Mobile dropdown */}
         {menuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white/97 backdrop-blur-sm">
+          <div className="md:hidden max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-gray-100 bg-white/97 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}
@@ -275,12 +271,13 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
                 </svg>
-                Chat on WhatsApp
+                {tr.fab_label}
               </a>
             </div>
           </div>
         )}
       </nav>
+      {forceScrolled && <div aria-hidden="true" className="h-20" />}
 
       {/* ── Search Overlay ────────────────────────────────────────────────────── */}
       {searchOpen && (
@@ -309,9 +306,9 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search spices, seeds, herbs…"
+                placeholder={tr.prod_search_placeholder}
                 className="flex-1 text-base text-[#2C2C2C] placeholder-gray-400 outline-none bg-transparent"
-                aria-label="Search products"
+                aria-label={`${tr.nav_search} ${tr.nav_products}`}
                 aria-autocomplete="list"
                 autoComplete="off"
               />
@@ -330,27 +327,27 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
             {/* Results */}
             {searchQuery.trim() === "" ? (
               <div className="px-5 py-4">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Browse by category</p>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{tr.prod_filter_label}</p>
                 <div className="flex flex-wrap gap-2">
-                  {["Spices", "Seeds", "Herbs"].map((cat) => (
+                  {categoryIds.map((cat) => (
                     <Link
                       key={cat}
-                      href={`/products?search=${cat}`}
+                      href={`/products?search=${encodeURIComponent(getLocalizedCategory(cat, lang))}`}
                       onClick={closeSearch}
                       className="px-3 py-1.5 bg-[#F0F5F0] text-[#2D5F2E] text-sm font-semibold rounded-full hover:bg-[#2D5F2E] hover:text-white transition-colors"
                     >
-                      {cat}
+                      {getLocalizedCategory(cat, lang)}
                     </Link>
                   ))}
                 </div>
                 <p className="text-xs text-gray-400 mt-4">
-                  Start typing to search across {allProducts.length} products
+                  {tr.prod_search_placeholder}
                 </p>
               </div>
             ) : results.length === 0 ? (
               <div className="px-5 py-8 text-center">
-                <p className="text-sm font-semibold text-gray-500 mb-1">No products found for &ldquo;{searchQuery}&rdquo;</p>
-                <p className="text-xs text-gray-400">Try a different keyword — e.g. turmeric, seeds, herbs</p>
+                <p className="text-sm font-semibold text-gray-500 mb-1">{tr.prod_no_results} &ldquo;{searchQuery}&rdquo;</p>
+                <p className="text-xs text-gray-400">{tr.prod_no_results_sub}</p>
               </div>
             ) : (
               <ul role="listbox" className="max-h-80 overflow-y-auto divide-y divide-gray-50">
@@ -396,8 +393,8 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
             <div className="border-t border-gray-100 px-5 py-2.5 flex items-center justify-between bg-gray-50/60">
               <p className="text-[11px] text-gray-400">
                 {results.length > 0
-                  ? `${results.length} result${results.length !== 1 ? "s" : ""}`
-                  : "Type to search"}
+                  ? `${results.length} ${results.length !== 1 ? tr.prod_found_plural : tr.prod_found}`
+                  : tr.prod_search_placeholder}
               </p>
               <kbd className="text-[10px] bg-white border border-gray-200 text-gray-400 px-2 py-0.5 rounded font-mono shadow-sm">ESC</kbd>
             </div>

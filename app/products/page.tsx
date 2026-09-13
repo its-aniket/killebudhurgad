@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, Suspense } from "react";
+import { useMemo, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,174 +8,18 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFAB from "@/components/layout/WhatsAppFAB";
 import { useLanguage } from "@/lib/LanguageContext";
+import { categoryIds, getLocalizedCategory, getLocalizedProduct, products, type CategoryId } from "@/lib/products";
 
-// ── Product Data ──────────────────────────────────────────────────────────────
+type FilterCategory = "all" | CategoryId;
 
-type Category = "Spices" | "Seeds" | "Herbs";
-
-interface Product {
-  slug: string;
-  name: string;
-  category: Category;
-  description: string;
-  image: string | null;
-  bgColor: string;
-  tags: string[];
+function categoryFromSearchParam(value: string | null): FilterCategory {
+  return categoryIds.includes(value?.toLowerCase() as CategoryId) ? value!.toLowerCase() as CategoryId : "all";
 }
 
-const allProducts: Product[] = [
-  {
-    slug: "turmeric",
-    name: "Organic Turmeric Powder",
-    category: "Spices",
-    description:
-      "Golden bright, certified organic turmeric from Kolhapur's finest farms. Over 25% curcumin content. Available in 1 kg to 50 kg bulk configurations.",
-    image: "/turmeric.png",
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Organic Certified", "Export Grade"],
-  },
-  {
-    slug: "black-pepper",
-    name: "Black Pepper",
-    category: "Spices",
-    description:
-      "Bold, pungent black pepper the king of spices. Sun dried to lock in natural oils and sharp heat. Export grade, FSSAI certified, full documentation.",
-    image: "/black-pepper.png",
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Sun Dried", "Export Grade"],
-  },
-  {
-    slug: "red-chilli",
-    name: "Chili Powder",
-    category: "Spices",
-    description:
-      "Bold and spicy red chili that brings vibrant color and rich heat to any recipe. Available as whole dried, flakes, or finely ground powder.",
-    image: "/red-chilli.png",
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Sun Dried", "Export Grade"],
-  },
-  {
-    slug: "dry-ginger",
-    name: "Dry Ginger",
-    category: "Spices",
-    description:
-      "High quality dried ginger with a strong aroma and spicy flavor, naturally supporting immunity and digestion. Available whole, split, or powdered.",
-    image: null,
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Sun Dried", "Export Grade"],
-  },
-  {
-    slug: "cumin",
-    name: "Cumin Seeds",
-    category: "Seeds",
-    description:
-      "Warm, earthy cumin with high essential oil content. Cleaned and machine sorted for maximum purity. Trusted by spice importers across the Gulf and Europe.",
-    image: "/cumin.png",
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Machine Sorted", "Export Grade"],
-  },
-  {
-    slug: "coriander",
-    name: "Coriander Seeds",
-    category: "Seeds",
-    description:
-      "Mild, citrusy coriander seeds from Rajasthan and Maharashtra farms. Machine cleaned, split-free, and packed for long-haul export.",
-    image: "/coriander.png",
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Machine Cleaned", "Export Grade"],
-  },
-  {
-    slug: "fenugreek",
-    name: "Fenugreek Seeds",
-    category: "Seeds",
-    description:
-      "Aromatic, slightly bitter fenugreek seeds rich in dietary fibre. Widely used in food, nutraceutical, and cosmetic industries globally.",
-    image: "/fenugreek.png",
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Machine Cleaned", "Export Grade"],
-  },
-  {
-    slug: "fennel",
-    name: "Fennel Seeds",
-    category: "Seeds",
-    description:
-      "Fragrant spice with a sweet and mild flavor, often used in traditional medicine to support digestion and overall well being.",
-    image: null,
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Machine Cleaned", "Export Grade"],
-  },
-  {
-    slug: "sesame",
-    name: "Sesame Seeds",
-    category: "Seeds",
-    description:
-      "Classic premium seeds prized for their smooth flavor and rich oil content, commonly used in culinary dishes and traditional sweets.",
-    image: null,
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Machine Sorted", "Export Grade"],
-  },
-  {
-    slug: "mint",
-    name: "Mint Leaves",
-    category: "Herbs",
-    description:
-      "Aromatic leaves with a sweet, refreshing flavor, known for supporting digestion and providing a natural sense of freshness.",
-    image: null,
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Shade Dried", "Export Grade"],
-  },
-  {
-    slug: "basil",
-    name: "Basil Leaves",
-    category: "Herbs",
-    description:
-      "Fresh, sacred, and aromatic leaves perfect for health supplements and immunity boosting. Naturally rich in antioxidants and essential oils.",
-    image: null,
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Hand-Harvested", "Organic Certified"],
-  },
-  {
-    slug: "moringa",
-    name: "Moringa Leaves",
-    category: "Herbs",
-    description:
-      "Powerful dried leaves packed with rich nutrients, naturally boosting energy and strengthening immunity. Known as the \"miracle tree\" superfood.",
-    image: null,
-    bgColor: "rgb(240, 245, 240)",
-    tags: ["Superfood", "Organic Certified"],
-  },
-  {
-    slug: "curry-leaves",
-    name: "Curry Leaves",
-    category: "Herbs",
-    description:
-      "Highly aromatic green leaves widely used to enrich flavor in traditional cuisine while supporting natural wellness and digestion.",
-    image: null,
-    bgColor: "rgb(245, 245, 240)",
-    tags: ["Shade Dried", "Export Grade"],
-  },
-];
-
-const categories = ["All", "Spices", "Seeds", "Herbs"] as const;
-type FilterCategory = (typeof categories)[number];
-
-// ── Leaf placeholder for products without an image ────────────────────────────
 function ImagePlaceholder() {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="80"
-        height="80"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-[#2D5F2E]/20"
-        aria-hidden="true"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-[#2D5F2E]/20" aria-hidden="true">
         <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
         <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
       </svg>
@@ -183,156 +27,66 @@ function ImagePlaceholder() {
   );
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
 function ProductsContent() {
-  const { tr } = useLanguage();
+  const { lang, tr } = useLanguage();
   const searchParams = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState<FilterCategory>("All");
+  const [activeCategory, setActiveCategory] = useState<FilterCategory>(() => categoryFromSearchParam(searchParams.get("cat")));
   const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
-
-  const categoryLabels: Record<FilterCategory, string> = {
-    All: tr.prod_cat_all,
-    Spices: "Spices",
-    Seeds: "Seeds",
-    Herbs: "Herbs",
-  };
-
-  // Sync search state if the URL param changes (e.g. navigating back/forward)
-  useEffect(() => {
-    setSearch(searchParams.get("search") ?? "");
-  }, [searchParams]);
+  const localizedProducts = useMemo(() => products.map((product) => getLocalizedProduct(product, lang)), [lang]);
 
   const filtered = useMemo(() => {
-    return allProducts.filter((p) => {
-      const matchCat =
-        activeCategory === "All" || p.category === activeCategory;
-      const matchSearch =
-        search.trim() === "" ||
-        p.name.toLowerCase().includes(search.toLowerCase()) ||
-        p.category.toLowerCase().includes(search.toLowerCase());
-      return matchCat && matchSearch;
+    const query = search.trim().toLowerCase();
+    return localizedProducts.filter((product) => {
+      const categoryMatches = activeCategory === "all" || product.categoryId === activeCategory;
+      const searchMatches = query === "" || product.searchTerms.some((term) => term.includes(query)) || product.category.toLowerCase().includes(query);
+      return categoryMatches && searchMatches;
     });
-  }, [activeCategory, search]);
+  }, [activeCategory, localizedProducts, search]);
+
+  const categories: FilterCategory[] = ["all", ...categoryIds];
 
   return (
-    <div
-      className="min-h-screen bg-white text-[#2C2C2C]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
+    <div className="min-h-screen bg-white text-[#2C2C2C]" style={{ fontFamily: "'Inter', sans-serif" }}>
       <Navbar forceScrolled />
-
-      {/* ── Hero Banner ── */}
       <section className="bg-[#F0F5F0] py-20 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-[#D4A574] text-[10px] font-black tracking-[0.3em] uppercase mb-4">
-            {tr.prod_catalogue_label}
-          </p>
-          <h1
-            className="font-black text-[#2C2C2C] leading-tight mb-4"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: "clamp(36px, 5vw, 60px)",
-            }}
-          >
-            {tr.prod_hero_title}
-          </h1>
-          <p className="text-gray-500 max-w-xl text-base leading-relaxed">
-            {tr.prod_hero_sub}
-          </p>
+          <p className="text-[#D4A574] text-[10px] font-black tracking-[0.3em] uppercase mb-4">{tr.prod_catalogue_label}</p>
+          <h1 className="font-black text-[#2C2C2C] leading-tight mb-4" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(36px, 5vw, 60px)" }}>{tr.prod_hero_title}</h1>
+          <p className="text-gray-500 max-w-xl text-base leading-relaxed">{tr.prod_hero_sub}</p>
         </div>
       </section>
 
-      {/* ── Sticky Filter + Search Bar ── */}
       <section className="sticky top-20 z-40 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          {/* Category Filters */}
           <div className="flex items-center gap-2 flex-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400" aria-hidden="true">
-              <path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />
-            </svg>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                  activeCategory === cat
-                    ? "bg-[#2D5F2E] text-white shadow-sm"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                {categoryLabels[cat]}
+            {categories.map((category) => (
+              <button key={category} onClick={() => setActiveCategory(category)} className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${activeCategory === category ? "bg-[#2D5F2E] text-white shadow-sm" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+                {category === "all" ? tr.prod_cat_all : getLocalizedCategory(category, lang)}
               </button>
             ))}
           </div>
-
-          {/* Search */}
-          <div className="relative">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true">
-              <path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" />
-            </svg>
-            <input
-              type="search"
-              placeholder={tr.prod_search_placeholder}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 pr-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#2D5F2E] focus:ring-1 focus:ring-[#2D5F2E] w-52 transition-all"
-            />
-          </div>
+          <input type="search" placeholder={tr.prod_search_placeholder} value={search} onChange={(event) => setSearch(event.target.value)} className="px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#2D5F2E] focus:ring-1 focus:ring-[#2D5F2E] w-52 transition-all" />
         </div>
       </section>
 
-      {/* ── Products Grid ── */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-sm text-gray-400 mb-8">
-            {filtered.length} {filtered.length !== 1 ? tr.prod_found_plural : tr.prod_found}
-          </p>
-
+          <p className="text-sm text-gray-500 mb-8">{filtered.length} {filtered.length !== 1 ? tr.prod_found_plural : tr.prod_found}</p>
           {filtered.length === 0 ? (
-            <div className="text-center py-24 text-gray-400">
-              <p className="text-lg font-semibold mb-2">{tr.prod_no_results}</p>
-              <p className="text-sm">{tr.prod_no_results_sub}</p>
-            </div>
+            <div className="py-20 text-center"><p className="text-lg font-semibold mb-2">{tr.prod_no_results}</p><p className="text-sm text-gray-500">{tr.prod_no_results_sub}</p></div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((product) => (
-                <Link
-                  key={product.slug}
-                  href={`/products/${product.slug}`}
-                  className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:border-gray-200 transition-all duration-300 flex flex-col"
-                >
-                  <div className="overflow-hidden relative" style={{ background: product.bgColor, height: "220px" }}>
-                    {product.image ? (
-                      <Image src={product.image} alt={product.name} fill className="object-contain p-8 transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
-                    ) : (
-                      <ImagePlaceholder />
-                    )}
-                    <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#2D5F2E] text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest shadow-sm">
-                      {product.category}
-                    </span>
-                    <span className="absolute bottom-3 right-3 bg-[#2D5F2E] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {tr.prod_export_grade}
-                    </span>
+                <Link key={product.slug} href={`/products/${product.slug}`} className="group rounded-2xl overflow-hidden border border-gray-100 bg-white hover:border-[#2D5F2E]/30 hover:shadow-xl transition-all">
+                  <div className="h-60 flex items-center justify-center p-8 relative" style={{ backgroundColor: product.bgColor }}>
+                    {product.image ? <Image src={product.image} alt={product.name} width={240} height={240} className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500" /> : <ImagePlaceholder />}
+                    <span className="absolute top-4 left-4 bg-white/90 text-[#2D5F2E] text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">{product.category}</span>
                   </div>
-
-                  <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-bold text-[#2C2C2C] text-base mb-2 leading-snug group-hover:text-[#2D5F2E] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                      {product.name}
-                    </h3>
-                    <p className="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2 flex-1">
-                      {product.description}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {product.tags.map((tag) => (
-                        <span key={tag} className="text-[10px] font-semibold border border-gray-200 text-gray-400 px-2 py-0.5 rounded-full">{tag}</span>
-                      ))}
-                    </div>
-                    <span className="flex items-center gap-1.5 text-[#2D5F2E] text-sm font-bold mt-auto group/btn">
-                      {tr.prod_view_details}
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/btn:translate-x-0.5 transition-transform" aria-hidden="true">
-                        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                      </svg>
-                    </span>
+                  <div className="p-6">
+                    <h2 className="text-xl font-black text-[#2C2C2C] mb-3 group-hover:text-[#2D5F2E] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>{product.name}</h2>
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-5">{product.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-5">{product.tags.slice(0, 2).map((tag) => <span key={tag} className="text-xs font-semibold border border-gray-200 text-gray-500 px-2.5 py-1 rounded-full">{tag}</span>)}</div>
+                    <span className="text-[#2D5F2E] text-sm font-bold">{tr.prod_view_details} →</span>
                   </div>
                 </Link>
               ))}
@@ -340,25 +94,6 @@ function ProductsContent() {
           )}
         </div>
       </section>
-
-      {/* ── Bottom CTA ── */}
-      <section className="py-16 bg-[#F9FAF9] border-t border-gray-100">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="font-black text-[#2C2C2C] mb-4" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)" }}>
-            {tr.prod_cta_title}
-          </h2>
-          <p className="text-gray-500 mb-8 max-w-lg mx-auto text-sm leading-relaxed">
-            {tr.prod_cta_sub}
-          </p>
-          <Link href="/contact" className="bg-[#2D5F2E] text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-[#1e4520] transition-all inline-flex items-center gap-2 group shadow-lg">
-            {tr.prod_cta_btn}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">
-              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
-      </section>
-
       <Footer />
       <WhatsAppFAB />
     </div>
@@ -366,9 +101,5 @@ function ProductsContent() {
 }
 
 export default function ProductsPage() {
-  return (
-    <Suspense>
-      <ProductsContent />
-    </Suspense>
-  );
+  return <Suspense><ProductsContent /></Suspense>;
 }

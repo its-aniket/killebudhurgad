@@ -53,7 +53,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col -mt-20 overflow-hidden">
+    <section className="relative min-h-[90vh] flex flex-col overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image src="/hero-spices.png" alt="Premium Indian spices" fill className="object-cover" priority />

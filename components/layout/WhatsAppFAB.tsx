@@ -1,10 +1,16 @@
+"use client";
+
+import { useLanguage } from "@/lib/LanguageContext";
+
 export default function WhatsAppFAB() {
+  const { tr } = useLanguage();
+
   return (
     <a
       href="https://wa.me/919156519393"
       target="_blank"
       rel="noreferrer"
-      aria-label="Chat on WhatsApp"
+      aria-label={tr.fab_label}
       className="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] text-white rounded-2xl flex items-center justify-center shadow-xl hover:scale-110 hover:rounded-xl active:scale-95 transition-all z-50"
       style={{ boxShadow: "rgba(37, 211, 102, 0.4) 0px 8px 30px" }}
     >

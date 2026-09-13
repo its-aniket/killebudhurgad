@@ -6,14 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFAB from "@/components/layout/WhatsAppFAB";
 import { useLanguage } from "@/lib/LanguageContext";
-
-interface Spec { label: string; value: string; }
-interface PackagingOption { size: string; desc: string; }
-interface Product {
-  slug: string; name: string; category: string; tagline: string;
-  description: string; image: string; bgColor: string; tags: string[];
-  features: string[]; specs: Spec[]; packaging: PackagingOption[];
-}
+import { getLocalizedProduct, type Product } from "@/lib/products";
 
 const ChevronIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400" aria-hidden="true">
@@ -21,11 +14,13 @@ const ChevronIcon = () => (
   </svg>
 );
 
-export default function ProductDetailClient({ product, relatedProducts }: {
+export default function ProductDetailClient({ product: productData, relatedProducts }: {
   product: Product;
   relatedProducts: Product[];
 }) {
-  const { tr } = useLanguage();
+  const { lang, tr } = useLanguage();
+  const product = getLocalizedProduct(productData, lang);
+  const localizedRelatedProducts = relatedProducts.map((relatedProduct) => getLocalizedProduct(relatedProduct, lang));
 
   return (
     <div className="min-h-screen bg-white text-[#2C2C2C]" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -52,7 +47,7 @@ export default function ProductDetailClient({ product, relatedProducts }: {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               {/* Image */}
               <div className="rounded-2xl overflow-hidden flex items-center justify-center min-h-[380px] lg:min-h-[480px] p-10 lg:sticky lg:top-28" style={{ backgroundColor: product.bgColor }}>
-                <Image src={product.image} alt={product.name} width={420} height={420} className="object-contain w-full max-w-[340px] lg:max-w-[420px] drop-shadow-2xl" priority />
+                {product.image ? <Image src={product.image} alt={product.name} width={420} height={420} className="object-contain w-full max-w-[340px] lg:max-w-[420px] drop-shadow-2xl" priority /> : <span className="text-[#2D5F2E]/30 text-7xl" aria-label={product.name}>✦</span>}
               </div>
 
               {/* Details */}
@@ -146,10 +141,10 @@ export default function ProductDetailClient({ product, relatedProducts }: {
               <h2 className="text-3xl font-black text-[#2C2C2C]" style={{ fontFamily: "'Poppins', sans-serif" }}>{tr.pd_related}</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedProducts.map((rel) => (
+              {localizedRelatedProducts.map((rel) => (
                 <Link key={rel.slug} href={`/products/${rel.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#2D5F2E]/30 hover:shadow-xl transition-all duration-300">
                   <div className="flex items-center justify-center h-52 p-8" style={{ backgroundColor: rel.bgColor }}>
-                    <Image src={rel.image} alt={rel.name} width={200} height={200} className="object-contain w-full max-w-[160px] drop-shadow-lg group-hover:scale-105 transition-transform duration-300" />
+                    {rel.image ? <Image src={rel.image} alt={rel.name} width={200} height={200} className="object-contain w-full max-w-[160px] drop-shadow-lg group-hover:scale-105 transition-transform duration-300" /> : <span className="text-[#2D5F2E]/30 text-5xl" aria-label={rel.name}>✦</span>}
                   </div>
                   <div className="p-5">
                     <span className="text-[#2D5F2E] text-xs font-bold tracking-widest uppercase">{rel.category}</span>

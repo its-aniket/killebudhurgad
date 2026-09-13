@@ -1,7 +1,6 @@
 export type LangCode =
-  | "en" | "mr" | "hi" | "ar" | "ur"
-  | "gu" | "ta" | "te" | "kn" | "bn" | "pa"
-  | "fr" | "de" | "es" | "zh" | "ja" | "pt";
+  | "en" | "mr" | "hi" | "ar" | "es" | "fr" | "de"
+  | "nl" | "ru" | "zh" | "ja" | "pt" | "it" | "gu" | "ta";
 
 export interface Translations {
   // Navbar
@@ -208,26 +207,24 @@ export const languages: { code: LangCode; label: string; nativeName: string; dir
   { code: "en", label: "English",    nativeName: "English" },
   { code: "mr", label: "Marathi",    nativeName: "मराठी" },
   { code: "hi", label: "Hindi",      nativeName: "हिन्दी" },
-  { code: "gu", label: "Gujarati",   nativeName: "ગુજરાતી" },
-  { code: "ta", label: "Tamil",      nativeName: "தமிழ்" },
-  { code: "te", label: "Telugu",     nativeName: "తెలుగు" },
-  { code: "kn", label: "Kannada",    nativeName: "ಕನ್ನಡ" },
-  { code: "bn", label: "Bengali",    nativeName: "বাংলা" },
-  { code: "pa", label: "Punjabi",    nativeName: "ਪੰਜਾਬੀ" },
-  { code: "ar", label: "Arabic",     nativeName: "العربية",  dir: "rtl" },
-  { code: "ur", label: "Urdu",       nativeName: "اردو",     dir: "rtl" },
+  { code: "ar", label: "Arabic",     nativeName: "العربية", dir: "rtl" },
+  { code: "es", label: "Spanish",    nativeName: "Español" },
   { code: "fr", label: "French",     nativeName: "Français" },
   { code: "de", label: "German",     nativeName: "Deutsch" },
-  { code: "es", label: "Spanish",    nativeName: "Español" },
-  { code: "pt", label: "Portuguese", nativeName: "Português" },
-  { code: "zh", label: "Chinese",    nativeName: "中文" },
+  { code: "nl", label: "Dutch",      nativeName: "Nederlands" },
+  { code: "ru", label: "Russian",    nativeName: "Русский" },
+  { code: "zh", label: "Mandarin",   nativeName: "中文" },
   { code: "ja", label: "Japanese",   nativeName: "日本語" },
+  { code: "pt", label: "Portuguese", nativeName: "Português" },
+  { code: "it", label: "Italian",    nativeName: "Italiano" },
+  { code: "gu", label: "Gujarati",   nativeName: "ગુજરાતી" },
+  { code: "ta", label: "Tamil",      nativeName: "தமிழ்" },
 ];
 
 // Raw partial translations — non-English langs only need to override what they translate
 type PartialTranslations = Partial<Translations>;
 
-const raw: Record<LangCode, PartialTranslations> = {
+const raw: Record<string, PartialTranslations> = {
   en: {
     nav_home: "Home", nav_products: "Products", nav_about: "About", nav_contact: "Contact",
     nav_get_quote: "Get Quote", nav_search: "Search",
@@ -846,6 +843,42 @@ const raw: Record<LangCode, PartialTranslations> = {
     footer_get_in_touch: "ਸੰਪਰਕ ਕਰੋ", footer_rights: "ਸਾਰੇ ਅਧਿਕਾਰ ਸੁਰੱਖਿਅਤ ਹਨ।",
     fab_label: "WhatsApp 'ਤੇ ਚੈਟ ਕਰੋ",
   },
+  nl: {
+    nav_home: "Home", nav_products: "Producten", nav_about: "Over ons", nav_contact: "Contact",
+    nav_get_quote: "Offerte aanvragen", nav_search: "Zoeken",
+    hero_headline1: "Premium", hero_headline2: "Landbouwproducten", hero_tagline: "voor de wereld.",
+    hero_subtext: "Van de vruchtbare grond van Kolhapur naar meer dan 30 landen — de beste specerijen, granen en biologische producten.",
+    hero_cta_explore: "Producten bekijken", hero_cta_contact: "Neem contact op",
+    hero_stat_years: "Jaar ervaring", hero_stat_countries: "Bediende landen", hero_stat_products: "Premiumproducten", hero_stat_farmers: "Boerenpartners",
+    fp_section_label: "Ons assortiment", fp_section_title: "Uitgelichte producten", fp_view_all: "Bekijk alle 15 producten", fp_featured_label: "Uitgelicht product", fp_view_details: "Details bekijken", fp_bulk_inquiry: "Bulk-aanvraag",
+    wcu_label: "Waarom voor ons kiezen", wcu_title1: "De belofte achter", wcu_title2: "elke export", wcu_subtext: "We verzenden niet alleen producten — we exporteren het vertrouwen en erfgoed van de landbouwgemeenschappen van Kolhapur.",
+    wcu_f1_title: "Natuurlijk en duurzaam", wcu_f1_desc: "Elk product is herleidbaar tot gecertificeerde biologische boerderijen.", wcu_f2_title: "Internationale normen", wcu_f2_desc: "FSSAI- en ISO-gecertificeerd.", wcu_f3_title: "Boeren versterken", wcu_f3_desc: "Directe samenwerkingen met meer dan 500 boerengezinnen.", wcu_f4_title: "Directe export", wcu_f4_desc: "Geen tussenpersonen — concurrerende prijzen.",
+    test_label: "Vertrouwen van klanten", test_title1: "Woorden van", test_title2: "onze partners", cta_label: "Klaar om in te kopen?", cta_title: "Laten we uw behoeften bespreken.", cta_subtext: "Voor kopers, distributeurs en retailers vinden we het juiste product en de juiste verpakking.", cta_inquiry: "Stuur een aanvraag", cta_whatsapp: "WhatsApp ons", cert_label: "Gecertificeerd en conform", faq_label: "Vragen?", faq_title: "Veelgestelde vragen", faq_subtext: "Alles over inkopen, verzending en samenwerken met Kille Bhudargad Agro.", faq_contact_link: "Neem contact op met ons team →", footer_tagline: "Van de vruchtbare grond van Bhudargad naar meer dan 30 landen — premium specerijen, granen en biologische producten.", footer_company: "Bedrijf", footer_products: "Producten", footer_support: "Ondersteuning", footer_get_in_touch: "Neem contact op", footer_rights: "Alle rechten voorbehouden.", fab_label: "Chat via WhatsApp",
+  },
+  ru: {
+    nav_home: "Главная", nav_products: "Продукты", nav_about: "О компании", nav_contact: "Контакты",
+    nav_get_quote: "Получить предложение", nav_search: "Поиск",
+    hero_headline1: "Премиальные", hero_headline2: "агропродукты", hero_tagline: "для всего мира.",
+    hero_subtext: "С плодородных земель Колхапура в более чем 30 стран — лучшие специи, зерно и органическая продукция.",
+    hero_cta_explore: "Посмотреть продукты", hero_cta_contact: "Связаться с нами",
+    hero_stat_years: "Лет работы", hero_stat_countries: "Стран обслуживания", hero_stat_products: "Премиальных продуктов", hero_stat_farmers: "Фермеров-партнёров",
+    fp_section_label: "Наш ассортимент", fp_section_title: "Рекомендуемые продукты", fp_view_all: "Все 15 продуктов", fp_featured_label: "Рекомендуемый продукт", fp_view_details: "Подробнее", fp_bulk_inquiry: "Оптовый запрос",
+    wcu_label: "Почему выбирают нас", wcu_title1: "Обещание за", wcu_title2: "каждым экспортом", wcu_subtext: "Мы не просто отправляем продукты — мы экспортируем доверие и наследие фермерских сообществ Колхапура.",
+    wcu_f1_title: "Натурально и устойчиво", wcu_f1_desc: "Каждый продукт отслеживается до сертифицированных органических ферм.", wcu_f2_title: "Международные стандарты", wcu_f2_desc: "Сертификация FSSAI и ISO.", wcu_f3_title: "Поддержка фермеров", wcu_f3_desc: "Прямое партнёрство с более чем 500 фермерскими семьями.", wcu_f4_title: "Прямой экспорт", wcu_f4_desc: "Без посредников — конкурентные цены.",
+    test_label: "Доверие клиентов", test_title1: "Слова наших", test_title2: "партнёров", cta_label: "Готовы к закупке?", cta_title: "Обсудим ваши требования.", cta_subtext: "Покупателям, дистрибьюторам и ритейлерам мы подберём нужный продукт и упаковку.", cta_inquiry: "Отправить запрос", cta_whatsapp: "Написать в WhatsApp", cert_label: "Сертифицировано и соответствует нормам", faq_label: "Есть вопросы?", faq_title: "Часто задаваемые вопросы", faq_subtext: "Всё о закупках, доставке и работе с Kille Bhudargad Agro.", faq_contact_link: "Связаться с нашей командой →", footer_tagline: "С плодородных земель Бударгада в более чем 30 стран — премиальные специи, зерно и органическая продукция.", footer_company: "Компания", footer_products: "Продукты", footer_support: "Поддержка", footer_get_in_touch: "Связаться", footer_rights: "Все права защищены.", fab_label: "Написать в WhatsApp",
+  },
+  it: {
+    nav_home: "Home", nav_products: "Prodotti", nav_about: "Chi siamo", nav_contact: "Contatti",
+    nav_get_quote: "Richiedi un preventivo", nav_search: "Cerca",
+    hero_headline1: "Prodotti agricoli", hero_headline2: "premium", hero_tagline: "per il mondo.",
+    hero_subtext: "Dalle fertili terre di Kolhapur a oltre 30 paesi — le migliori spezie, cereali e prodotti biologici.",
+    hero_cta_explore: "Esplora i prodotti", hero_cta_contact: "Contattaci",
+    hero_stat_years: "Anni di attività", hero_stat_countries: "Paesi serviti", hero_stat_products: "Prodotti premium", hero_stat_farmers: "Agricoltori partner",
+    fp_section_label: "La nostra gamma", fp_section_title: "Prodotti in evidenza", fp_view_all: "Vedi tutti i 15 prodotti", fp_featured_label: "Prodotto in evidenza", fp_view_details: "Vedi dettagli", fp_bulk_inquiry: "Richiesta all'ingrosso",
+    wcu_label: "Perché sceglierci", wcu_title1: "La promessa dietro", wcu_title2: "ogni esportazione", wcu_subtext: "Non spediamo solo prodotti — esportiamo la fiducia e il patrimonio delle comunità agricole di Kolhapur.",
+    wcu_f1_title: "Naturale e sostenibile", wcu_f1_desc: "Ogni prodotto è tracciato fino a fattorie biologiche certificate.", wcu_f2_title: "Standard internazionali", wcu_f2_desc: "Certificato FSSAI e ISO.", wcu_f3_title: "Sostegno agli agricoltori", wcu_f3_desc: "Partnership dirette con oltre 500 famiglie di agricoltori.", wcu_f4_title: "Esportazione diretta", wcu_f4_desc: "Senza intermediari — prezzi competitivi.",
+    test_label: "Fiducia dei clienti", test_title1: "Le parole dei", test_title2: "nostri partner", cta_label: "Pronto per l'approvvigionamento?", cta_title: "Parliamo delle tue esigenze.", cta_subtext: "Per acquirenti, distributori e rivenditori troviamo il prodotto e l'imballaggio giusti.", cta_inquiry: "Invia una richiesta", cta_whatsapp: "Scrivici su WhatsApp", cert_label: "Certificato e conforme", faq_label: "Hai domande?", faq_title: "Domande frequenti", faq_subtext: "Tutto su approvvigionamento, spedizioni e collaborazione con Kille Bhudargad Agro.", faq_contact_link: "Contatta il nostro team →", footer_tagline: "Dalle fertili terre di Bhudargad a oltre 30 paesi — spezie, cereali e prodotti biologici premium.", footer_company: "Azienda", footer_products: "Prodotti", footer_support: "Supporto", footer_get_in_touch: "Contattaci", footer_rights: "Tutti i diritti riservati.", fab_label: "Chatta su WhatsApp",
+  },
   fr: {
     nav_home: "Accueil", nav_products: "Produits", nav_about: "À propos", nav_contact: "Contact",
     nav_get_quote: "Obtenir un devis", nav_search: "Rechercher",
@@ -1064,10 +1097,43 @@ const raw: Record<LangCode, PartialTranslations> = {
   },
 };
 
+// Catalogue and product-detail wording is shared by every product route. Keeping
+// it separate lets the homepage dictionaries stay concise while ensuring a
+// selected locale carries through from product cards to the detail view.
+const commerce: Partial<Record<LangCode, PartialTranslations>> = {
+  ar: { prod_catalogue_label: "كتالوجنا", prod_hero_title: "منتجات زراعية ممتازة", prod_hero_sub: "توابل وبذور وحبوب عضوية معتمدة من أفضل مزارع كولهابور، جاهزة للتصدير عالميًا.", prod_filter_label: "تصفية", prod_search_placeholder: "ابحث عن المنتجات…", prod_found: "منتج موجود", prod_found_plural: "منتجات موجودة", prod_no_results: "لم يتم العثور على منتجات", prod_no_results_sub: "جرّب تعديل البحث أو التصفية.", prod_view_details: "عرض التفاصيل", prod_export_grade: "درجة تصدير", prod_cta_title: "تحتاج منتجًا مخصصًا أو طلبًا بالجملة؟", prod_cta_sub: "تواصل معنا للمواصفات المخصصة والملصقات الخاصة وأسعار الكميات.", prod_cta_btn: "اطلب عرضًا مخصصًا", prod_cat_all: "الكل", pd_breadcrumb_home: "الرئيسية", pd_breadcrumb_products: "المنتجات", pd_key_features: "الميزات الرئيسية", pd_specifications: "المواصفات", pd_packaging: "خيارات التعبئة", pd_request_quote: "اطلب عرضًا", pd_chat_whatsapp: "تحدث عبر واتساب", pd_explore_more: "استكشف المزيد", pd_related: "منتجات ذات صلة" },
+  es: { prod_catalogue_label: "Nuestro catálogo", prod_hero_title: "Productos agrícolas premium", prod_hero_sub: "Especias, semillas y granos orgánicos certificados de las mejores granjas de Kolhapur, listos para exportación mundial.", prod_filter_label: "Filtrar", prod_search_placeholder: "Buscar productos…", prod_found: "producto encontrado", prod_found_plural: "productos encontrados", prod_no_results: "No se encontraron productos", prod_no_results_sub: "Intente ajustar su búsqueda o filtro.", prod_view_details: "Ver detalles", prod_export_grade: "Calidad de exportación", prod_cta_title: "¿Necesita un producto personalizado o pedido al por mayor?", prod_cta_sub: "Contáctenos para especificaciones personalizadas, marca privada y precios por volumen.", prod_cta_btn: "Solicitar una cotización", prod_cat_all: "Todos", pd_breadcrumb_home: "Inicio", pd_breadcrumb_products: "Productos", pd_key_features: "Características principales", pd_specifications: "Especificaciones", pd_packaging: "Opciones de embalaje", pd_request_quote: "Solicitar cotización", pd_chat_whatsapp: "Chatear por WhatsApp", pd_explore_more: "Explorar más", pd_related: "Productos relacionados" },
+  fr: { prod_catalogue_label: "Notre catalogue", prod_hero_title: "Produits agricoles premium", prod_hero_sub: "Épices, graines et céréales bio certifiées des meilleures fermes de Kolhapur, prêtes pour l'export mondial.", prod_filter_label: "Filtrer", prod_search_placeholder: "Rechercher des produits…", prod_found: "produit trouvé", prod_found_plural: "produits trouvés", prod_no_results: "Aucun produit trouvé", prod_no_results_sub: "Essayez de modifier votre recherche ou votre filtre.", prod_view_details: "Voir les détails", prod_export_grade: "Qualité export", prod_cta_title: "Besoin d'un produit sur mesure ou d'une commande en vrac ?", prod_cta_sub: "Contactez-nous pour des spécifications sur mesure, une marque privée et des tarifs en volume.", prod_cta_btn: "Demander un devis", prod_cat_all: "Tous", pd_breadcrumb_home: "Accueil", pd_breadcrumb_products: "Produits", pd_key_features: "Caractéristiques clés", pd_specifications: "Spécifications", pd_packaging: "Options d'emballage", pd_request_quote: "Demander un devis", pd_chat_whatsapp: "Discuter sur WhatsApp", pd_explore_more: "Découvrir plus", pd_related: "Produits associés" },
+  de: { prod_catalogue_label: "Unser Katalog", prod_hero_title: "Premium-Agrarprodukte", prod_hero_sub: "Zertifizierte Bio-Gewürze, Samen und Getreide von Kolhapurs besten Farmen, weltweit exportbereit.", prod_filter_label: "Filtern", prod_search_placeholder: "Produkte suchen…", prod_found: "Produkt gefunden", prod_found_plural: "Produkte gefunden", prod_no_results: "Keine Produkte gefunden", prod_no_results_sub: "Passen Sie Ihre Suche oder Ihren Filter an.", prod_view_details: "Details ansehen", prod_export_grade: "Exportqualität", prod_cta_title: "Benötigen Sie ein Sonderprodukt oder eine Großbestellung?", prod_cta_sub: "Kontaktieren Sie uns für individuelle Spezifikationen, Eigenmarken und Mengenpreise.", prod_cta_btn: "Individuelles Angebot anfordern", prod_cat_all: "Alle", pd_breadcrumb_home: "Startseite", pd_breadcrumb_products: "Produkte", pd_key_features: "Hauptmerkmale", pd_specifications: "Spezifikationen", pd_packaging: "Verpackungsoptionen", pd_request_quote: "Angebot anfordern", pd_chat_whatsapp: "Per WhatsApp chatten", pd_explore_more: "Mehr entdecken", pd_related: "Ähnliche Produkte" },
+  nl: { prod_catalogue_label: "Onze catalogus", prod_hero_title: "Premium landbouwproducten", prod_hero_sub: "Gecertificeerde biologische specerijen, zaden en granen van de beste boerderijen van Kolhapur, wereldwijd exportklaar.", prod_filter_label: "Filter", prod_search_placeholder: "Zoek producten…", prod_found: "product gevonden", prod_found_plural: "producten gevonden", prod_no_results: "Geen producten gevonden", prod_no_results_sub: "Pas uw zoekopdracht of filter aan.", prod_view_details: "Details bekijken", prod_export_grade: "Exportkwaliteit", prod_cta_title: "Een maatproduct of bulkbestelling nodig?", prod_cta_sub: "Neem contact op voor maatwerkspecificaties, private labels en volumetarieven.", prod_cta_btn: "Vraag een offerte aan", prod_cat_all: "Alle", pd_breadcrumb_home: "Home", pd_breadcrumb_products: "Producten", pd_key_features: "Belangrijkste kenmerken", pd_specifications: "Specificaties", pd_packaging: "Verpakkingsopties", pd_request_quote: "Offerte aanvragen", pd_chat_whatsapp: "Chat via WhatsApp", pd_explore_more: "Meer ontdekken", pd_related: "Gerelateerde producten" },
+  ru: { prod_catalogue_label: "Наш каталог", prod_hero_title: "Премиальные агропродукты", prod_hero_sub: "Сертифицированные органические специи, семена и зерно с лучших ферм Колхапура, готовые к экспорту по всему миру.", prod_filter_label: "Фильтр", prod_search_placeholder: "Поиск продуктов…", prod_found: "продукт найден", prod_found_plural: "продуктов найдено", prod_no_results: "Продукты не найдены", prod_no_results_sub: "Измените поиск или фильтр.", prod_view_details: "Подробнее", prod_export_grade: "Экспортное качество", prod_cta_title: "Нужен индивидуальный продукт или оптовый заказ?", prod_cta_sub: "Свяжитесь с нами для индивидуальных спецификаций, частной марки и объёмных цен.", prod_cta_btn: "Запросить предложение", prod_cat_all: "Все", pd_breadcrumb_home: "Главная", pd_breadcrumb_products: "Продукты", pd_key_features: "Ключевые особенности", pd_specifications: "Характеристики", pd_packaging: "Варианты упаковки", pd_request_quote: "Запросить предложение", pd_chat_whatsapp: "Написать в WhatsApp", pd_explore_more: "Смотреть больше", pd_related: "Похожие продукты" },
+  zh: { prod_catalogue_label: "我们的目录", prod_hero_title: "优质农产品", prod_hero_sub: "来自科尔哈普尔优质农场的认证有机香料、种子和谷物，已准备好出口全球。", prod_filter_label: "筛选", prod_search_placeholder: "搜索产品…", prod_found: "件产品", prod_found_plural: "件产品", prod_no_results: "未找到产品", prod_no_results_sub: "请调整搜索或筛选条件。", prod_view_details: "查看详情", prod_export_grade: "出口级", prod_cta_title: "需要定制产品或批量订单？", prod_cta_sub: "请联系我们，获取定制规格、贴牌服务和批量价格。", prod_cta_btn: "申请定制报价", prod_cat_all: "全部", pd_breadcrumb_home: "首页", pd_breadcrumb_products: "产品", pd_key_features: "主要特点", pd_specifications: "规格", pd_packaging: "包装选项", pd_request_quote: "申请报价", pd_chat_whatsapp: "通过 WhatsApp 联系", pd_explore_more: "探索更多", pd_related: "相关产品" },
+  ja: { prod_catalogue_label: "製品カタログ", prod_hero_title: "プレミアム農産物", prod_hero_sub: "コルハープルの優良農場から届く、認証済み有機スパイス・種子・穀物。世界各地への輸出に対応しています。", prod_filter_label: "絞り込み", prod_search_placeholder: "製品を検索…", prod_found: "件の製品が見つかりました", prod_found_plural: "件の製品が見つかりました", prod_no_results: "製品が見つかりません", prod_no_results_sub: "検索語またはフィルターを調整してください。", prod_view_details: "詳細を見る", prod_export_grade: "輸出品質", prod_cta_title: "特注製品または大量注文が必要ですか？", prod_cta_sub: "カスタム仕様、プライベートラベル、数量別価格についてお問い合わせください。", prod_cta_btn: "個別見積もりを依頼", prod_cat_all: "すべて", pd_breadcrumb_home: "ホーム", pd_breadcrumb_products: "製品", pd_key_features: "主な特徴", pd_specifications: "仕様", pd_packaging: "包装オプション", pd_request_quote: "見積もりを依頼", pd_chat_whatsapp: "WhatsAppでチャット", pd_explore_more: "さらに見る", pd_related: "関連製品" },
+  pt: { prod_catalogue_label: "Nosso catálogo", prod_hero_title: "Produtos agrícolas premium", prod_hero_sub: "Especiarias, sementes e grãos orgânicos certificados das melhores fazendas de Kolhapur, prontos para exportação mundial.", prod_filter_label: "Filtrar", prod_search_placeholder: "Pesquisar produtos…", prod_found: "produto encontrado", prod_found_plural: "produtos encontrados", prod_no_results: "Nenhum produto encontrado", prod_no_results_sub: "Tente ajustar sua pesquisa ou filtro.", prod_view_details: "Ver detalhes", prod_export_grade: "Qualidade de exportação", prod_cta_title: "Precisa de um produto personalizado ou pedido em volume?", prod_cta_sub: "Fale conosco para especificações personalizadas, marca própria e preços por volume.", prod_cta_btn: "Solicitar cotação", prod_cat_all: "Todos", pd_breadcrumb_home: "Início", pd_breadcrumb_products: "Produtos", pd_key_features: "Principais características", pd_specifications: "Especificações", pd_packaging: "Opções de embalagem", pd_request_quote: "Solicitar cotação", pd_chat_whatsapp: "Conversar no WhatsApp", pd_explore_more: "Explorar mais", pd_related: "Produtos relacionados" },
+  it: { prod_catalogue_label: "Il nostro catalogo", prod_hero_title: "Prodotti agricoli premium", prod_hero_sub: "Spezie, semi e cereali biologici certificati dalle migliori aziende agricole di Kolhapur, pronti per l'esportazione mondiale.", prod_filter_label: "Filtra", prod_search_placeholder: "Cerca prodotti…", prod_found: "prodotto trovato", prod_found_plural: "prodotti trovati", prod_no_results: "Nessun prodotto trovato", prod_no_results_sub: "Prova a modificare la ricerca o il filtro.", prod_view_details: "Vedi dettagli", prod_export_grade: "Qualità da esportazione", prod_cta_title: "Serve un prodotto personalizzato o un ordine all'ingrosso?", prod_cta_sub: "Contattaci per specifiche su misura, marchio privato e prezzi per volume.", prod_cta_btn: "Richiedi un preventivo", prod_cat_all: "Tutti", pd_breadcrumb_home: "Home", pd_breadcrumb_products: "Prodotti", pd_key_features: "Caratteristiche principali", pd_specifications: "Specifiche", pd_packaging: "Opzioni di imballaggio", pd_request_quote: "Richiedi un preventivo", pd_chat_whatsapp: "Chatta su WhatsApp", pd_explore_more: "Scopri di più", pd_related: "Prodotti correlati" },
+  gu: { prod_catalogue_label: "અમારી સૂચિ", prod_hero_title: "પ્રીમિયમ કૃષિ ઉત્પાદનો", prod_hero_sub: "કોલ્હાપુરના શ્રેષ્ઠ ખેતરોમાંથી પ્રમાણિત ઓર્ગેનિક મસાલા, બીજ અને અનાજ — વૈશ્વિક નિકાસ માટે તૈયાર.", prod_filter_label: "ફિલ્ટર", prod_search_placeholder: "ઉત્પાદનો શોધો…", prod_found: "ઉત્પાદન મળ્યું", prod_found_plural: "ઉત્પાદનો મળ્યા", prod_no_results: "કોઈ ઉત્પાદન મળ્યું નથી", prod_no_results_sub: "તમારી શોધ અથવા ફિલ્ટર બદલો.", prod_view_details: "વિગતો જુઓ", prod_export_grade: "નિકાસ ગ્રેડ", prod_cta_title: "કસ્ટમ ઉત્પાદન અથવા જથ્થાબંધ ઓર્ડર જોઈએ છે?", prod_cta_sub: "કસ્ટમ વિશિષ્ટતાઓ, પ્રાઇવેટ લેબલ અને જથ્થા મુજબના ભાવ માટે સંપર્ક કરો.", prod_cta_btn: "કસ્ટમ ક્વોટ માંગો", prod_cat_all: "બધા", pd_breadcrumb_home: "મુખ્ય પૃષ્ઠ", pd_breadcrumb_products: "ઉત્પાદનો", pd_key_features: "મુખ્ય વિશેષતાઓ", pd_specifications: "વિશિષ્ટતાઓ", pd_packaging: "પેકેજિંગ વિકલ્પો", pd_request_quote: "ક્વોટ માંગો", pd_chat_whatsapp: "WhatsApp પર ચેટ કરો", pd_explore_more: "વધુ જાણો", pd_related: "સંબંધિત ઉત્પાદનો" },
+  ta: { prod_catalogue_label: "எங்கள் பட்டியல்", prod_hero_title: "உயர்தர வேளாண் பொருட்கள்", prod_hero_sub: "கோலாப்பூரின் சிறந்த பண்ணைகளிலிருந்து சான்றளிக்கப்பட்ட இயற்கை மசாலா, விதைகள் மற்றும் தானியங்கள் — உலக ஏற்றுமதிக்குத் தயாராக உள்ளன.", prod_filter_label: "வடிகட்டு", prod_search_placeholder: "பொருட்களைத் தேடுங்கள்…", prod_found: "பொருள் கிடைத்தது", prod_found_plural: "பொருட்கள் கிடைத்தன", prod_no_results: "பொருட்கள் எதுவும் கிடைக்கவில்லை", prod_no_results_sub: "தேடல் அல்லது வடிகட்டலை மாற்றிப் பார்க்கவும்.", prod_view_details: "விவரங்களைப் பார்க்கவும்", prod_export_grade: "ஏற்றுமதி தரம்", prod_cta_title: "தனிப்பயன் பொருள் அல்லது மொத்த ஆர்டர் வேண்டுமா?", prod_cta_sub: "தனிப்பயன் விவரக்குறிப்புகள், தனியார் லேபிள் மற்றும் அளவு விலைக்கு எங்களைத் தொடர்பு கொள்ளவும்.", prod_cta_btn: "தனிப்பயன் மேற்கோளை கோருங்கள்", prod_cat_all: "அனைத்தும்", pd_breadcrumb_home: "முகப்பு", pd_breadcrumb_products: "பொருட்கள்", pd_key_features: "முக்கிய அம்சங்கள்", pd_specifications: "விவரக்குறிப்புகள்", pd_packaging: "பேக்கேஜிங் விருப்பங்கள்", pd_request_quote: "மேற்கோளை கோருங்கள்", pd_chat_whatsapp: "WhatsApp-ல் உரையாடவும்", pd_explore_more: "மேலும் ஆராயுங்கள்", pd_related: "தொடர்புடைய பொருட்கள்" },
+};
+
+const footerLinks: Partial<Record<LangCode, PartialTranslations>> = {
+  ar: { footer_our_process: "عمليتنا", footer_careers: "الوظائف", footer_organic: "النطاق العضوي", footer_shipping: "معلومات الشحن", footer_faqs: "الأسئلة الشائعة", footer_privacy: "سياسة الخصوصية", footer_terms: "شروط الخدمة", footer_cookies: "سياسة ملفات تعريف الارتباط" },
+  es: { footer_our_process: "Nuestro proceso", footer_careers: "Carreras", footer_organic: "Gama orgánica", footer_shipping: "Información de envío", footer_faqs: "Preguntas frecuentes", footer_privacy: "Política de privacidad", footer_terms: "Términos de servicio", footer_cookies: "Política de cookies" },
+  fr: { footer_our_process: "Notre processus", footer_careers: "Carrières", footer_organic: "Gamme biologique", footer_shipping: "Informations d'expédition", footer_faqs: "FAQ", footer_privacy: "Politique de confidentialité", footer_terms: "Conditions d'utilisation", footer_cookies: "Politique de cookies" },
+  de: { footer_our_process: "Unser Prozess", footer_careers: "Karriere", footer_organic: "Bio-Sortiment", footer_shipping: "Versandinformationen", footer_faqs: "Häufige Fragen", footer_privacy: "Datenschutz", footer_terms: "Nutzungsbedingungen", footer_cookies: "Cookie-Richtlinie" },
+  nl: { footer_our_process: "Ons proces", footer_careers: "Vacatures", footer_organic: "Biologisch assortiment", footer_shipping: "Verzendinformatie", footer_faqs: "Veelgestelde vragen", footer_privacy: "Privacybeleid", footer_terms: "Servicevoorwaarden", footer_cookies: "Cookiebeleid" },
+  ru: { footer_our_process: "Наш процесс", footer_careers: "Карьера", footer_organic: "Органическая линейка", footer_shipping: "Информация о доставке", footer_faqs: "Частые вопросы", footer_privacy: "Политика конфиденциальности", footer_terms: "Условия обслуживания", footer_cookies: "Политика cookie" },
+  zh: { footer_our_process: "我们的流程", footer_careers: "招聘", footer_organic: "有机系列", footer_shipping: "运输信息", footer_faqs: "常见问题", footer_privacy: "隐私政策", footer_terms: "服务条款", footer_cookies: "Cookie 政策" },
+  ja: { footer_our_process: "当社のプロセス", footer_careers: "採用情報", footer_organic: "オーガニック製品", footer_shipping: "配送情報", footer_faqs: "よくある質問", footer_privacy: "プライバシーポリシー", footer_terms: "利用規約", footer_cookies: "Cookieポリシー" },
+  pt: { footer_our_process: "Nosso processo", footer_careers: "Carreiras", footer_organic: "Linha orgânica", footer_shipping: "Informações de envio", footer_faqs: "Perguntas frequentes", footer_privacy: "Política de privacidade", footer_terms: "Termos de serviço", footer_cookies: "Política de cookies" },
+  it: { footer_our_process: "Il nostro processo", footer_careers: "Lavora con noi", footer_organic: "Linea biologica", footer_shipping: "Informazioni sulla spedizione", footer_faqs: "Domande frequenti", footer_privacy: "Informativa sulla privacy", footer_terms: "Termini di servizio", footer_cookies: "Informativa sui cookie" },
+  gu: { footer_our_process: "અમારી પ્રક્રિયા", footer_careers: "કારકિર્દી", footer_organic: "ઓર્ગેનિક શ્રેણી", footer_shipping: "શિપિંગ માહિતી", footer_faqs: "વારંવાર પૂછાતા પ્રશ્નો", footer_privacy: "ગોપનીયતા નીતિ", footer_terms: "સેવાની શરતો", footer_cookies: "કૂકી નીતિ" },
+  ta: { footer_our_process: "எங்கள் செயல்முறை", footer_careers: "வேலைவாய்ப்புகள்", footer_organic: "இயற்கை வரம்பு", footer_shipping: "அனுப்புதல் தகவல்", footer_faqs: "அடிக்கடி கேட்கப்படும் கேள்விகள்", footer_privacy: "தனியுரிமைக் கொள்கை", footer_terms: "சேவை விதிமுறைகள்", footer_cookies: "குக்கீ கொள்கை" },
+};
+
 // Merge every language with English defaults so new keys are always available
 export const t = Object.fromEntries(
-  Object.entries(raw).map(([code, overrides]) => [
+  languages.map(({ code }) => [
     code,
-    { ...raw.en, ...overrides } as Translations,
+    { ...raw.en, ...raw[code], ...commerce[code], ...footerLinks[code] } as Translations,
   ])
 ) as Record<LangCode, Translations>;

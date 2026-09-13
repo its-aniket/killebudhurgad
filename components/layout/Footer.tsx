@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
+import { getLocalizedCategory } from "@/lib/products";
 
 const socialLinks = [
   {
@@ -30,25 +31,25 @@ const ChevronRight = () => (
 );
 
 export default function Footer() {
-  const { tr } = useLanguage();
+  const { lang, tr } = useLanguage();
 
   const companyLinks = [
-    { label: tr.footer_about_us,       href: "/about" },
+    { label: tr.nav_about,             href: "/about" },
     { label: tr.footer_our_process,    href: "/about#process" },
-    { label: tr.footer_certifications, href: "/about#certifications" },
+    { label: tr.cert_label,            href: "/about#certifications" },
     { label: tr.footer_careers,        href: "/contact" },
   ];
 
   const productLinks = [
-    { label: tr.footer_spices,  href: "/products?cat=Spices" },
-    { label: tr.footer_seeds,   href: "/products?cat=Seeds" },
-    { label: tr.footer_herbs,   href: "/products" },
+    { label: getLocalizedCategory("spices", lang), href: "/products?cat=Spices" },
+    { label: `${getLocalizedCategory("seeds", lang)} & ${getLocalizedCategory("grains", lang)}`, href: "/products?cat=Seeds" },
+    { label: getLocalizedCategory("herbs", lang), href: "/products" },
     { label: tr.footer_organic, href: "/products" },
   ];
 
   const supportLinks = [
-    { label: tr.footer_contact_us,   href: "/contact" },
-    { label: tr.footer_bulk_orders,  href: "/contact" },
+    { label: tr.nav_contact,         href: "/contact" },
+    { label: tr.fp_bulk_inquiry,     href: "/contact" },
     { label: tr.footer_shipping,     href: "/contact" },
     { label: tr.footer_faqs,         href: "/about#faq" },
   ];
