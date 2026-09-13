@@ -5,14 +5,12 @@ const companyLinks = [
   { label: "About Us", href: "/about" },
   { label: "Our Process", href: "/about#process" },
   { label: "Certifications", href: "/about#certifications" },
-  { label: "Careers", href: "/contact" },
 ];
 
 const productLinks = [
   { label: "Spices", href: "/products?cat=Spices" },
   { label: "Seeds & Grains", href: "/products?cat=Seeds" },
   { label: "Herbs & Leaves", href: "/products" },
-  { label: "Organic Range", href: "/products" },
 ];
 
 const supportLinks = [
@@ -142,9 +140,9 @@ export default function Footer() {
                   Kille Bhudargad Agro
                 </span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs">
-                From Bhudargad&apos;s fertile lands to over 30 countries — premium
-                spices, grains, and organic commodities with uncompromising
+              <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs text-justify">
+                From Bhudargad&apos;s fertile lands to over 30 countries supplying
+                premium spices, grains, and organic commodities with uncompromising
                 quality.
               </p>
               {/* Social Links */}
