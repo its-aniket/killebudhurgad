@@ -45,12 +45,10 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
-    { question: tr.faq_q1, answer: tr.faq_a1 },
     { question: tr.faq_q2, answer: tr.faq_a2 },
     { question: tr.faq_q3, answer: tr.faq_a3 },
     { question: tr.faq_q4, answer: tr.faq_a4 },
     { question: tr.faq_q5, answer: tr.faq_a5 },
-    { question: tr.faq_q6, answer: tr.faq_a6 },
   ];
 
   const toggle = (index: number) => setOpenIndex((prev) => (prev === index ? null : index));

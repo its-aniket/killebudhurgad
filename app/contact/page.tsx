@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFAB from "@/components/layout/WhatsAppFAB";
@@ -51,12 +51,55 @@ export default function ContactPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+  const inquiryDropdownRef = useRef<HTMLDivElement>(null);
+  const inquiryButtonRef = useRef<HTMLButtonElement>(null);
+  const inquiryOptionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const selectInquiryType = (inquiryType: string) => {
+    setForm((prev) => ({ ...prev, inquiryType }));
+    setInquiryOpen(false);
+    inquiryButtonRef.current?.focus();
+  };
+
+  const openInquiryDropdown = () => {
+    setInquiryOpen(true);
+    requestAnimationFrame(() => {
+      const selectedIndex = inquiryTypes.indexOf(form.inquiryType);
+      inquiryOptionRefs.current[selectedIndex >= 0 ? selectedIndex : 0]?.focus();
+    });
+  };
+
+  const handleInquiryOptionKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const nextIndex = event.key === "ArrowDown"
+        ? (index + 1) % inquiryTypes.length
+        : (index - 1 + inquiryTypes.length) % inquiryTypes.length;
+      inquiryOptionRefs.current[nextIndex]?.focus();
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setInquiryOpen(false);
+      inquiryButtonRef.current?.focus();
+    }
+  };
+
+  useEffect(() => {
+    const closeInquiryDropdown = (event: MouseEvent) => {
+      if (!inquiryDropdownRef.current?.contains(event.target as Node)) {
+        setInquiryOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeInquiryDropdown);
+    return () => document.removeEventListener("mousedown", closeInquiryDropdown);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -189,10 +232,84 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <label htmlFor="inquiryType" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">{tr.contact_inquiry_type}</label>
-                        <select id="inquiryType" name="inquiryType" value={form.inquiryType} onChange={handleChange} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#2D5F2E] focus:ring-1 focus:ring-[#2D5F2E] transition-all bg-white">
-                          <option value="">{tr.contact_inquiry_select}</option>
-                          {inquiryTypes.map((t) => (<option key={t} value={t}>{t}</option>))}
-                        </select>
+                        <div ref={inquiryDropdownRef} className="relative">
+                          <input type="hidden" name="inquiryType" value={form.inquiryType} />
+                          <button
+                            ref={inquiryButtonRef}
+                            id="inquiryType"
+                            type="button"
+                            aria-haspopup="listbox"
+                            aria-expanded={inquiryOpen}
+                            aria-controls="inquiry-type-options"
+                            onClick={() => inquiryOpen ? setInquiryOpen(false) : openInquiryDropdown()}
+                            onKeyDown={(event) => {
+                              if (["ArrowDown", "Enter", " "].includes(event.key)) {
+                                event.preventDefault();
+                                if (!inquiryOpen) openInquiryDropdown();
+                              }
+                            }}
+                            className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-start text-sm transition-all focus:outline-none focus:ring-1 ${
+                              inquiryOpen
+                                ? "border-[#2D5F2E] ring-[#2D5F2E]"
+                                : "border-gray-200 hover:border-[#2D5F2E]/50"
+                            }`}
+                          >
+                            <span className={form.inquiryType ? "text-[#2C2C2C]" : "text-gray-400"}>
+                              {form.inquiryType || tr.contact_inquiry_select}
+                            </span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="18"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className={`shrink-0 text-[#2D5F2E] transition-transform ${inquiryOpen ? "rotate-180" : ""}`}
+                              aria-hidden="true"
+                            >
+                              <path d="m6 9 6 6 6-6" />
+                            </svg>
+                          </button>
+
+                          {inquiryOpen && (
+                            <div
+                              id="inquiry-type-options"
+                              role="listbox"
+                              aria-label={tr.contact_inquiry_type}
+                              className="absolute z-20 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-gray-100 bg-white p-1.5 shadow-xl shadow-black/10"
+                            >
+                              {inquiryTypes.map((type, index) => {
+                                const selected = form.inquiryType === type;
+                                return (
+                                  <button
+                                    key={type}
+                                    ref={(element) => { inquiryOptionRefs.current[index] = element; }}
+                                    type="button"
+                                    role="option"
+                                    aria-selected={selected}
+                                    onClick={() => selectInquiryType(type)}
+                                    onKeyDown={(event) => handleInquiryOptionKeyDown(event, index)}
+                                    className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-start text-sm transition-colors ${
+                                      selected
+                                        ? "bg-[#E8F0E8] font-semibold text-[#2D5F2E]"
+                                        : "text-gray-600 hover:bg-[#F0F5F0] hover:text-[#2D5F2E]"
+                                    }`}
+                                  >
+                                    {type}
+                                    {selected && (
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                        <path d="m5 12 4 4L19 6" />
+                                      </svg>
+                                    )}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 

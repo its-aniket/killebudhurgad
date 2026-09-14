@@ -4,9 +4,8 @@ import WhatsAppFAB from "@/components/layout/WhatsAppFAB";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
-import Testimonials from "@/components/home/Testimonials";
+import ClientTrust from "@/components/home/ClientTrust";
 import CTASection from "@/components/home/CTASection";
-import CertificationsBar from "@/components/home/CertificationsBar";
 import FAQSection from "@/components/home/FAQSection";
 
 export default function HomePage() {
@@ -20,9 +19,8 @@ export default function HomePage() {
         <HeroSection />
         <FeaturedProducts />
         <WhyChooseUs />
-        <Testimonials />
+        <ClientTrust />
         <CTASection />
-        <CertificationsBar />
         <FAQSection />
       </main>
       <Footer />
