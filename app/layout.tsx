@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   description:
     "Premium agro products from Kolhapur, Maharashtra certified organic spices, grains & herbs exported to 30+ countries since 1999.",
   robots: "index, follow",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/icon.svg",
+  },
   openGraph: {
     title: "Kille Bhudargad Agro Private Limited",
     description:
