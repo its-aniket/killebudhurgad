@@ -68,7 +68,7 @@ const riceCatalogueProduct = (
   names: names(`${name} (${series} मालिका)`, `${name} (${series} श्रृंखला)`),
   categoryId: "grains",
   description,
-  image: "/rice.png",
+  image: "/rice-brown.png",
   bgColor: "rgb(245, 245, 240)",
   tags: ["export-grade", "bulk-available", "machine-cleaned"],
   searchAliases: ["rice", "basmati", "sella", "steam", name, series],
@@ -93,7 +93,7 @@ export const products: Product[] = [
   {
     slug: "rice", name: "Basmati Rice", names: names("बासमती तांदूळ", "बासमती चावल"), categoryId: "grains",
     description: "Premium long-grain basmati rice, carefully selected for its delicate aroma, fluffy texture, and consistent export quality.",
-    image: "/rice.png", bgColor: "rgb(245, 245, 240)", tags: ["export-grade", "bulk-available"], searchAliases: ["rice", "basmati", "तांदूळ", "चावल"],
+    image: "/rice-brown.png", bgColor: "rgb(245, 245, 240)", tags: ["export-grade", "bulk-available"], searchAliases: ["rice", "basmati", "तांदूळ", "चावल"],
   },
   riceCatalogueProduct("pr-11-14-white-sella-rice-primary", "PR 11/14 White Sella Rice", "Medium grain white parboiled rice. Ideal for puffed rice (murmurra), farsan, and daily meals.", "Primary"),
   riceCatalogueProduct("pr-11-14-steam-rice-primary", "PR 11/14 Steam Rice", "Medium grain steamed rice. Perfect for daily cooking, pulao, and idli-dosa batter.", "Primary"),

@@ -104,19 +104,6 @@ export default function ProductDetailClient({ product: productData, relatedProdu
                   </div>
                 </div>
 
-                {/* Packaging */}
-                <div>
-                  <h2 className="text-sm font-bold text-[#2C2C2C] uppercase tracking-widest mb-3">{tr.pd_packaging}</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {product.packaging.map((pack) => (
-                      <div key={pack.size} className="border border-gray-200 rounded-xl p-3 text-center hover:border-[#2D5F2E] hover:bg-[#F0F5F0] transition-all cursor-pointer group">
-                        <p className="font-bold text-[#2C2C2C] text-base group-hover:text-[#2D5F2E] transition-colors">{pack.size}</p>
-                        <p className="text-gray-500 text-xs mt-0.5">{pack.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
                 {/* CTAs */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <Link href="/contact" className="flex-1 flex items-center justify-center gap-2 bg-[#2D5F2E] text-white font-bold px-6 py-4 rounded-xl hover:bg-[#1e4320] active:scale-95 transition-all shadow-lg text-sm">

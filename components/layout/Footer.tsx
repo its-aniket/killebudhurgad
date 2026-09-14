@@ -48,7 +48,6 @@ export default function Footer() {
   const footerLegalLinks = [
     { label: tr.footer_privacy, href: "#" },
     { label: tr.footer_terms,   href: "#" },
-    { label: tr.footer_cookies, href: "#" },
   ];
 
   return (
@@ -59,11 +58,11 @@ export default function Footer() {
 
             {/* Brand Column */}
             <div className="col-span-12 lg:col-span-4">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center shadow p-1 shrink-0">
+              <div className="flex items-center mb-6">
+                <div className="w-20 h-18 rounded-xl overflow-hidden flex items-center justify-center shadow p-1 shrink-0">
                   <Image src="/kb-logo.svg" alt="Kille Bhudargad logo" width={44} height={44} className="object-contain w-full h-full" />
                 </div>
-                <span className="font-bold text-base text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <span className="font-bold text-lg text-white" style={{ fontFamily: "var(--font-bree)" }}>
                   Kille Bhudargad Agro
                 </span>
               </div>
@@ -124,11 +123,11 @@ export default function Footer() {
                   </span>
                   <span className="text-sm leading-relaxed">+91 9156519393</span>
                 </a>
-                <a href="mailto:killebhudargadprivatelimited@gmail.com" className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors group">
+                <a href="mailto:kbapltd@gmail.com" className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors group">
                   <span className="w-8 h-8 rounded-lg bg-white/[0.06] group-hover:bg-[#2D5F2E] flex items-center justify-center flex-shrink-0 transition-colors mt-0.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
                   </span>
-                  <span className="text-sm leading-relaxed break-all">killebhudargadprivatelimited@gmail.com</span>
+                  <span className="text-sm leading-relaxed break-all">kbapltd@gmail.com</span>
                 </a>
               </div>
             </div>

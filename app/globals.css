@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 :root {
+  --font-bree: 'Bree Serif', serif;
+}
+
+:root {
   --background: #ffffff;
   --foreground: #2C2C2C;
 }

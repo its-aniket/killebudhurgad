@@ -105,11 +105,11 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
           <div className="flex items-center justify-between h-20">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group" onClick={() => { setMenuOpen(false); setLangOpen(false); }}>
-              <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform shrink-0 p-1">
+            <Link href="/" className="flex items-center group" onClick={() => { setMenuOpen(false); setLangOpen(false); }}>
+              <div className="w-20 h-18 rounded-xl overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform shrink-0 p-1">
                 <Image src="/kb-logo.svg" alt="Kille Bhudargad logo" width={44} height={44} className="object-contain w-full h-full" priority />
               </div>
-              <span className="font-bold text-lg tracking-tight transition-colors duration-500" style={{ fontFamily: "'Poppins', sans-serif", color: logoTextColor }}>
+              <span className="font-bold text-xl tracking-tight transition-colors duration-500" style={{ fontFamily: "var(--font-bree)", color: logoTextColor }}>
                 Kille Bhudargad Agro
               </span>
             </Link>
