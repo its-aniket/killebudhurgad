@@ -72,7 +72,7 @@ export default function HeroSection() {
           {tr.hero_tagline}
         </p>
 
-        <p className="text-white/70 text-lg leading-relaxed mb-12 max-w-xl">
+        <p className="text-white text-lg leading-relaxed mb-12 max-w-xl">
           {tr.hero_subtext}
         </p>
 
