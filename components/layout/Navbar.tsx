@@ -109,7 +109,7 @@ export default function Navbar({ forceScrolled = false }: { forceScrolled?: bool
               <div className="w-20 h-18 rounded-xl overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform shrink-0 p-1">
                 <Image src="/kb-logo.svg" alt="Kille Bhudargad logo" width={44} height={44} className="object-contain w-full h-full" priority />
               </div>
-              <span className="font-bold text-xl tracking-tight transition-colors duration-500" style={{ fontFamily: "var(--font-bree)", color: logoTextColor }}>
+              <span className="font-bold text-lg tracking-tight transition-colors duration-500" style={{ fontFamily: "Georgia, serif", fontWeight: "bold", color: logoTextColor }}>
                 Kille Bhudargad Agro
               </span>
             </Link>

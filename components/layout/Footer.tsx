@@ -62,7 +62,7 @@ export default function Footer() {
                 <div className="w-20 h-18 rounded-xl overflow-hidden flex items-center justify-center shadow p-1 shrink-0">
                   <Image src="/kb-logo.svg" alt="Kille Bhudargad logo" width={44} height={44} className="object-contain w-full h-full" />
                 </div>
-                <span className="font-bold text-lg text-white" style={{ fontFamily: "var(--font-bree)" }}>
+                <span className="font-bold text-lg text-white" style={{ fontFamily: "Georgia, serif", fontWeight: "bold" }}>
                   Kille Bhudargad Agro
                 </span>
               </div>
