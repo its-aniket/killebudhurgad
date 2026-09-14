@@ -60,10 +60,10 @@ export default function Footer() {
             {/* Brand Column */}
             <div className="col-span-12 lg:col-span-4">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center bg-white shadow">
-                  <Image src="/logo.png" alt="Kille Bhudargad logo" width={40} height={40} className="object-contain w-full h-full" />
+                <div className="w-30 h-30">
+                  <Image src="/kb-logo.svg" alt="Kille Bhudargad logo" width={60} height={60} className="object-contain w-full h-full" />
                 </div>
-                <span className="font-bold text-lg text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <span className="font-bold text-base text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Kille Bhudargad Agro
                 </span>
               </div>

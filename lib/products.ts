@@ -173,7 +173,7 @@ export const products: Product[] = [
 ];
 
 export const featuredProductSlugs = ["rice", "turmeric", "red-chilli", "cumin"] as const;
-export const categoryIds: CategoryId[] = ["spices", "seeds", "herbs", "grains"];
+export const categoryIds: CategoryId[] = ["spices", "seeds", "herbs"];
 
 const riceLabels: Record<LangCode, string> = {
   en: "Rice", mr: "तांदूळ", hi: "चावल", ar: "أرز", es: "Arroz", fr: "Riz",

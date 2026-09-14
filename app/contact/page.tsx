@@ -119,12 +119,12 @@ export default function ContactPage() {
 
       <main>
         {/* ── Hero ── */}
-        <section className="bg-[#F0F5F0] py-20 border-b border-gray-100">
+        <section className="bg-[#F0F5F0] py-6 border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-[#D4A574] text-[10px] font-black tracking-[0.3em] uppercase mb-4">
               {tr.contact_reach_label}
             </p>
-            <h1 className="font-black text-[#2C2C2C] leading-tight mb-4" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(36px, 5vw, 60px)" }}>
+            <h1 className="font-black text-[#2C2C2C] leading-tight mb-4" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(36px, 6vw, 60px)" }}>
               {tr.contact_hero_title}
             </h1>
             <p className="text-gray-500 max-w-xl text-base leading-relaxed">
@@ -134,7 +134,7 @@ export default function ContactPage() {
         </section>
 
         {/* ── Main Content ── */}
-        <section className="py-16 lg:py-24">
+        <section className="py-16 lg:py-18">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
 
@@ -339,7 +339,8 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ── Quick CTA strip ── */}
+        {/* ── Quick CTA strip (commented out temporarily) ── */}
+        {/*
         <section className="py-12 bg-[#F9FAF9] border-t border-gray-100">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12">
@@ -358,6 +359,7 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
+        */}
       </main>
 
       <Footer />
