@@ -119,7 +119,7 @@ export default function ContactPage() {
 
       <main>
         {/* ── Hero ── */}
-        <section className="bg-[#F0F5F0] py-6 border-b border-gray-100">
+        <section className="bg-[#F0F5F0] py-5 border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-[#D4A574] text-[10px] font-black tracking-[0.3em] uppercase mb-4">
               {tr.contact_reach_label}
@@ -134,7 +134,7 @@ export default function ContactPage() {
         </section>
 
         {/* ── Main Content ── */}
-        <section className="py-16 lg:py-18">
+        <section className="py-16 lg:py-8">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
 

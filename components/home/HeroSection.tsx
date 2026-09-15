@@ -53,7 +53,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col overflow-hidden">
+    <section id="hero" className="relative min-h-[90vh] flex flex-col overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image src="/hero-spices-img.png" alt="Premium Indian rice and spices" fill className="object-cover" priority />
@@ -91,7 +91,7 @@ export default function HeroSection() {
       </div>
 
       {/* Stats Bar */}
-      <div className="relative z-10 max-w-5xl w-full mx-auto px-4 pb-0 mt-16">
+      <div className="relative z-10 max-w-4xl w-full mx-auto px-4 pb-0 mt-16">
         <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 grid grid-cols-2 md:grid-cols-4 divide-y divide-x-0 md:divide-x md:divide-y-0 divide-gray-100 overflow-hidden">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center text-center p-6">

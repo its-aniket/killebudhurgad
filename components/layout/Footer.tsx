@@ -33,6 +33,7 @@ export default function Footer() {
   const { tr } = useLanguage();
 
   const companyLinks = [
+    { label: tr.nav_home,              href: "/#hero" },
     { label: tr.nav_about,             href: "/about" },
     { label: tr.footer_our_process,    href: "/about#process" },
     { label: tr.cert_label,            href: "/about#certifications" },
